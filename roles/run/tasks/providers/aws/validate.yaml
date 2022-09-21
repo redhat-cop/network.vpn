@@ -1,0 +1,19 @@
+# Start validate task for provider aws
+---
+- name: Gather information about VPN connection
+  community.aws.ec2_vpc_vpn_info:
+    region: "{{ data.region | d(region) }}"
+    vpn_connection_ids:
+      - "{{ data.vpn_connection_id | d(vpn_connection_id) }}"
+  register: result
+
+- name: Set tunnel status from gathered information
+  set_fact:
+    tunnel_status: "{{ result.vpn_connections[0].vgw_telemetry[data.tunnel-1].status }}"
+
+- name: Validate VPN connection status
+  ansible.builtin.assert:
+    that:
+      - "{{ tunnel_status == data.session_status }}"
+    success_msg: "Tunnel session status validation passed!"
+    fail_msg: "Tunnel {{ data.tunnel }} session-status is {{ tunnel_status }}"

@@ -1,0 +1,7 @@
+---
+- debug:
+    msg: "Starting ansible.vpn.run"
+
+- name: Run specified actions
+  include_tasks: "{{ item.name }}.yaml"
+  loop: "{{ actions }}"

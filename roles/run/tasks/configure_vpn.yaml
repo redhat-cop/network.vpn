@@ -1,0 +1,37 @@
+---
+- name: Debug execution data
+  ansible.builtin.debug:
+    msg: "Running configure_vpn action"
+  
+- name: Load action variables
+  set_fact:
+    action: "{{ item.name }}"
+    data: "{{ item.vars | d({}) }}"
+    provider: "{{ item.vars.provider }}"
+
+- name: Assert that configuration file is provided
+  ansible.builtin.assert:
+    that: data.configuration_file is defined
+    fail_msg: 'configuration file path for configure_vpn action is undefined!'
+    success_msg: 'configuration file path provided!'
+
+- name: Load data from provided configuration file for configure_vpn action
+  ansible.builtin.include_vars:
+    file: "{{ data.configuration_file }}"
+    name: configuration
+
+#- name: "Validate configuration data against defined schema for provider - {{ provider }} and action - {{ action }}"
+#  ansible.utils.validate:
+#    data: "{{ configuration }}"
+#    criteria: "{{ lookup('file', 'files/schemas/providers/{{ provider }}/{{ action }}_schema.json') | from_json }}"
+#    engine: ansible.utils.jsonschema
+#  vars:
+#    ansible_jsonschema_draft: draft7
+#  register: result
+
+- name: "Start {{ action }} action for provider {{ provider }}"
+  ansible.builtin.include_tasks: "providers/{{ provider }}/{{ action }}.yaml"
+
+- name: Debug execution data
+  ansible.builtin.debug:
+    msg: "Completed configure_vpn action"

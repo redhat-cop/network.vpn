@@ -1,0 +1,16 @@
+---
+authors:
+  - Nilashish Chakraborty (@NilashishC)
+dependencies:
+  "cisco.ios": ">=3.0.0"
+  "azure.azcollection": ">=1.13.0"
+  "community.aws": ">=4.2.0"
+license_file: LICENSE
+name: vpn
+namespace: ansible
+description: Ansible Collection to build, maintain and validate VPN tunnels across cloud providers and network appliances.
+readme: README.md
+repository: https://github.com/ansible-collections/ansible.vpn
+issues: https://github.com/ansible-collections/ansible.vpn
+tags: [cisco, aws, azure]
+version: 0.0.0
