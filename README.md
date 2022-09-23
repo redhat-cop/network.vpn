@@ -1,6 +1,10 @@
-# Ansible VPN Collection
+# Ansible Network VPN Collection
 
-This repository contains the `ansible.vpn` Ansible Collection.
+This repository contains the `network.vpn` Ansible Collection.
+
+## Description
+An Ansible Collection to build, maintain and validate VPN tunnels across cloud providers and network appliances.
+See `Supported Providers` section for more details.
 
 ## Tested with Ansible
 
@@ -9,73 +13,86 @@ Tested with ansible-core 2.13 releases.
 ## Installation
 
 ```
-pip install ansible-core
-ansible-galaxy collection install ansible.vpn
+ansible-galaxy collection install network.vpn
 ```
 
 You can also include it in a `requirements.yml` file and install it via `ansible-galaxy collection install -r requirements.yml` using the format:
 
 ```yaml
 collections:
-- name: ansible.vpn
+- name: network.vpn
 ```
 
 See [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) for more details.
 
 ## Using this collection
 
-build.yaml
+### Example 1
+
 ```yaml
 ---
 - hosts: localhost
-  gather_facts: yes
-  roles:
-    - ansible.plugin_builder.run
+  gather_facts: true
+  tasks:
+    - name: "Run network.vpn collection with specified actions"
+      ansible.builtin.include_role:
+        name: network.vpn.run
+      vars:
+        actions:
+          - name: configure_vpn
+            vars:
+              provider: aws
+              configuration_file: aws.yaml
+          
+          - name: configure_vpn
+            vars:
+              provider: azure
+              configuration_file: azure.yaml
+
+          - name: validate
+            vars:
+              provider: aws
+              tunnel: 1
+              session_status: UP
+          
+          - name: validate
+            vars:
+              provider: azure
+              resource_group: VPN-RG
+              vpn_connection_name: Azure-to-AWS
+              session_status: Connected
 ```
-MANIFEST.yaml
+
+### Example 2
+
 ```yaml
 ---
-collection:
-  path: /path/to/collection
-  namespace: test_namespace
-  name: test_name
-plugins:
-  - type: action
-    name: custom_action
-    docstring: /path/to/docstring.yaml
-  
-  - type: cache
-    name: custom_cache
-    docstring: /path/to/docstring.yaml
-  
-  - type: filter
-    name: custom_filter
-    docstring: /path/to/docstring.yaml
+- hosts: csr_gateways
+  gather_facts: true
+  tasks:
+    - name: "Run network.vpn collection with specified actions"
+      ansible.builtin.include_role:
+        name: network.vpn.run
+      vars:
+        provider: csr
+        actions:
+          - name: configure_vpn
+            vars:
+              configuration_file: "{{ inventory_hostname }}.yaml"
 
-  - type: test
-    name: custom_test
-    docstring: /path/to/docstring.yaml
-  
-  - type: lookup
-    name: custom_lookup
-    docstring: /path/to/docstring.yaml
+          - name: validate
+            vars:
+              tunnel: Tunnel0
+              session_status: Connected
 ```
 
-```
-ansible-playbook build.yaml -e manifest_file=MANIFEST.yaml 
-```
+## Supported providers
 
-## Supported plugins
-
-| **Plugin Type**        | **Description**                                             |
-|------------------------|-------------------------------------------------------------|
-| action                 | Scaffold a action plugin                                    |
-| cache                  | Scaffold a cache plugin                                     |
-| filter                 | Scaffold a filter plugin                                    |
-| test                   | Scaffold a test plugin                                      |
-| lookup                 | Scaffold a lookup plugin                                    |
-| module_network_cli     | Scaffold a Network Resource Module that support network_cli |
-| module_network_netconf | Scaffold a Network Resource Module that supports netconf    |
+| **Providers**          |
+|------------------------|
+| aws                    |
+| azure                  |
+| csr                    |
 
 ## Options
 
