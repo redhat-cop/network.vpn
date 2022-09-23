@@ -4,19 +4,19 @@
     msg: "Running validate action"
 
 - name: Load action variables
-  set_fact:
+  ansible.builtin.set_fact:
     action: "{{ item.name }}"
     data: "{{ item.vars | d({}) }}"
-    provider: "{{ item.vars.provider }}"
+    provider: "{{ item.vars.provider | d(provider) }}"
 
-#- name: "Validate configuration data against defined schema for provider - {{ provider }} and action - {{ action }}"
-#  ansible.utils.validate:
-#    data: "{{ data }}"
-#    criteria: "{{ lookup('file', 'files/schemas/providers/{{ provider }}/{{ action }}_schema.json') | from_json }}"
-#    engine: ansible.utils.jsonschema
-#  vars:
-#    ansible_jsonschema_draft: draft7
-#  register: result
+- name: "Validate configuration data against defined schema for provider - {{ provider }} and action - {{ action }}"
+  ansible.utils.validate:
+    data: "{{ data }}"
+    criteria: "{{ lookup('file', 'files/schemas/providers/{{ provider }}/{{ action }}.json') | from_json }}"
+    engine: ansible.utils.jsonschema
+  vars:
+    ansible_jsonschema_draft: draft7
+  register: result
 
 - name: "Start {{ action }} action for provider {{ provider }}"
   ansible.builtin.include_tasks: "providers/{{ provider }}/{{ action }}.yaml"

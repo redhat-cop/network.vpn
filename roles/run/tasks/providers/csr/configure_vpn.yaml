@@ -11,7 +11,7 @@
 
 - name: Build tunnel interface configuration
   ansible.builtin.set_fact:
-    tunnel_config: 
+    tunnel_config:
       - "tunnel source {{ configuration.tunnel_interface.source }}"
       - "tunnel destination {{ configuration.tunnel_interface.destination }}"
       - "tunnel protection ipsec profile {{ configuration.vpn_profile.name }}"
@@ -37,7 +37,7 @@
   cisco.ios.ios_config:
     lines: "no shutdown"
     parents: "interface {{ configuration.tunnel_interface.name }}"
-  changed_when: False
+  changed_when: false
 
 - name: Set DPD values
   cisco.ios.ios_config:

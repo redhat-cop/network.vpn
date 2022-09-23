@@ -16,4 +16,4 @@
     that:
       - "{{ tunnel.session_status == data.session_status }}"
     fail_msg: "Tunnel {{ data.tunnel }} session-status is {{ tunnel.session_status }}"
-    success_msg: "Tunnel session status validation passed!"
+    success_msg: "Tunnel {{ data.tunnel }} has passed session status validation!"

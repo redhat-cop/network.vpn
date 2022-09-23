@@ -1,7 +1,8 @@
 ---
-- debug:
+- name: "Start network.vpn.run"
+  ansible.builtin.debug:
     msg: "Starting ansible.vpn.run"
 
-- name: Run specified actions
-  include_tasks: "{{ item.name }}.yaml"
+- name: "Load and run specified actions"
+  ansible.builtin.include_tasks: "{{ item.name }}.yaml"
   loop: "{{ actions }}"

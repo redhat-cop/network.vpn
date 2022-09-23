@@ -1,0 +1,24 @@
+{
+    "description": "JSON Schema for Ansible VPN Collection",
+    "title": "Validate action schema for provider aws",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "region": {
+            "type": "string"
+        },
+        "tunnel": {
+            "type": "integer"
+        },
+        "session_status": {
+            "type": "string"
+        },
+        "vpn_connection_id": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "tunnel",
+        "session_status"
+    ]
+}

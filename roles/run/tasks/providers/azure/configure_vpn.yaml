@@ -1,0 +1,36 @@
+# Start configure_vpn for provider azure
+---
+- name: Create virtual gateway (if specified)
+  azure.azcollection.azure_rm_virtualnetworkgateway:
+    name: "{{ configuration.virtual_gateway.name }}"
+    resource_group: "{{ configuration.resource_group }}"
+    virtual_network: "{{ configuration.virtual_gateway.virtual_network }}"
+    gateway_type: vpn
+    vpn_type: "{{ configuration.virtual_gateway.vpn_type }}"
+    sku: "{{ configuration.virtual_gateway.sku }}"
+    ip_configurations: "{{ configuration.virtual_gateway.ip_configurations }}"
+
+- name: "Create local network gateway"
+  network.vpn.azure_rm_localnetworkgateway:
+    name: "{{ configuration.local_gateway.name }}"
+    location: "{{ configuration.region }}"
+    resource_group: "{{ configuration.resource_group }}"
+    gateway_ip_address: "{{ configuration.local_gateway.gateway_ip_address }}"
+    local_network_address_space: "{{ configuration.local_gateway.local_network_address_space }}"
+
+- name: "Create VPN connection"
+  network.vpn.azure_rm_virtualnetworkgatewayconnection:
+    name: "{{ configuration.vpn_connection.name }}"
+    location: "{{ configuration.region }}"
+    resource_group: "{{ configuration.resource_group }}"
+    virtual_network_gateway1: "{{ configuration.vpn_connection.virtual_network_gateway1 }}"
+    local_network_gateway: "{{ configuration.vpn_connection.local_network_gateway }}"
+    connection_type: IPsec
+    connection_protocol: "{{ configuration.vpn_connection.connection_protocol }}"
+    shared_key: "{{ configuration.vpn_connection.pre_shared_key }}"
+
+- name: Set VPN connection facts as a fall back for validate action
+  ansible.builtin.set_fact:
+    region: "{{ configuration.region }}"
+    resource_group: "{{ configuration.resource_group }}"
+    vpn_connection_name: "{{ configuration.vpn_connection.name }}"
