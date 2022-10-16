@@ -1,5 +1,7 @@
 ---
 # Example configuration_file data for provider CSR action configure_vpn
+# The path to a file containing these variables has to be passed to the `configuration_file` option
+
 vpn_profile: 
   name: default
   remote_fqdn: example.org

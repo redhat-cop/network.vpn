@@ -1,5 +1,6 @@
 ---
 # Example configuration_file data for provider AWS action configure_vpn
+# The path to a file containing these variables has to be passed to the `configuration_file` option
 
 region: ap-southeast-1
 vpc_id: vpc-003fc11e87801
