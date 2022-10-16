@@ -1,0 +1,7 @@
+---
+# Example options for provider Azure action validate
+# These options have to provided under `vars` key for the action validate
+
+resource_group: example-RG # optional if action validate is run after action configure_vpn 
+vpn_connection_name: Azure-to-AWS # optional if action validate is run after action configure_vpn 
+session_status: Connected

@@ -1,0 +1,29 @@
+---
+# Example configuration_file data for provider Azure action configure_vpn
+resource_group: example-RG
+region: West US 3
+
+# to use an existing virtual gateway skip this option
+# provide name of the existing virtual gateway in `vpn_connection` section
+virtual_gateway:
+  name: VPN-VNG
+  virtual_network: Azure-VPN-VN
+  vpn_type: route_based
+  sku: VpnGw1
+  ip_configurations:
+    - name: default
+      public_ip_address_name: VPN-Pub
+      subnet: GatewaySubnet
+
+local_gateway:
+  name: AWS-VPN
+  gateway_ip_address: 203.0.113.100
+  local_network_address_space:
+    - "192.0.2.0/24"
+
+vpn_connection:
+  name: Azure-to-AWS
+  virtual_network_gateway1: VPN-VNG
+  local_network_gateway: AWS-VPN
+  connection_protocol: IKEv2
+  pre_shared_key: SuperSecretPassword

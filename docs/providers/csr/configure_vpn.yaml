@@ -1,0 +1,21 @@
+---
+# Example configuration_file data for provider CSR action configure_vpn
+vpn_profile: 
+  name: default
+  remote_fqdn: example.org
+  local_fqdn: csr1.example.org
+  authentication:
+    remote_psk: SuperSecretPassword
+    local_psk: SuperSecretPassword
+
+tunnel_interface: 
+  name: Tunnel0
+  ipv4: 
+    address: 172.16.0.1
+    netmask: 255.255.255.252
+  source: GigabitEthernet1
+  destination: 203.0.113.100
+
+dead_peer_detection:
+  interval: 10
+  retry: 2

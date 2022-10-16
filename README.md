@@ -88,14 +88,24 @@ See [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_gui
 
 ## Supported providers
 
-| **Providers**          |
-|------------------------|
-| aws                    |
-| azure                  |
-| csr                    |
 
-## Options
+| **Provider**           | **Actions**                                                 | **Action Options**  |
+|------------------------|-------------------------------------------------------------|----------------------
+| aws                    | configure_vpn                                               | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/aws/configure_vpn.yaml)
+|                        | validate                                                    | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/aws/validate.yaml)
+|                        |                                                             |
+| aws                    | configure_vpn                                               | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/azure/configure_vpn.yaml)
+|                        | validate                                                    | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/azure/validate.yaml)
+|                        |                                                             |
+| csr                    | configure_vpn                                               | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/csr/validate.yaml)
+|                        | validate                                                    | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/csr/validate.yaml)
 
+
+## Requirements
+This following collections should be installed:
+- azure.azcollection
+- cisco.ios
+- community.aws
 
 ## Licensing
 

@@ -1,0 +1,6 @@
+---
+# Example options for provider CSR action validate
+# These options have to provided under `vars` key for the action validate
+
+tunnel: Tunnel0
+session_status: UP

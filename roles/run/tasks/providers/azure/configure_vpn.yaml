@@ -9,6 +9,7 @@
     vpn_type: "{{ configuration.virtual_gateway.vpn_type }}"
     sku: "{{ configuration.virtual_gateway.sku }}"
     ip_configurations: "{{ configuration.virtual_gateway.ip_configurations }}"
+  when: configuration.virtual_gateway is defined
 
 - name: "Create local network gateway"
   network.vpn.azure_rm_localnetworkgateway:

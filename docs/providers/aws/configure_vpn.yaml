@@ -1,0 +1,24 @@
+---
+# Example configuration_file data for provider AWS action configure_vpn
+
+region: ap-southeast-1
+vpc_id: vpc-003fc11e87801
+
+# to use an existing virtual gateway skip this option
+# provide id of the existing virtual gateway in `vpn_connection` section
+virtual_gateway1:
+  name: VPN-VNG
+  vgw_type: ipsec.1
+
+customer_gateway:
+  name: AWS-to-Azure
+  ip_address: 192.168.1.100
+  routing: static
+
+vpn_connection:
+  tunnel_options:
+    - PreSharedKey: SuperSecretPassword
+  routes:
+    - 172.16.0.0/16
+  static_only: True
+  vpn_gateway_id: vgw-056d1a789ae73867c
