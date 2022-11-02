@@ -24,8 +24,6 @@ options:
     description: Limit results by providing a list of tags. Format tags as 'key' or 'key:value'.
     type: list
     elements: str
-extends_documentation_fragment:
-    - azure.azcollection.azure
 '''
 
 EXAMPLES = '''
