@@ -30,16 +30,16 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
     - name: Get facts for one virtual network connection
-      azure_rm_virtualnetworkgatewayconnection_info:
+      network.vpn.azure_rm_virtualnetworkgatewayconnection_info:
         resource_group: myResourceGroup
         name: vpn-conn
 
     - name: Get facts for all virtual network connections in a resource group
-      azure_rm_virtualnetworkgatewayconnection_info:
+      network.vpn.azure_rm_virtualnetworkgatewayconnection_info:
         resource_group: myResourceGroup
 
     - name: Get facts by tags
-      azure_rm_virtualnetworkgatewayconnection_info:
+      network.vpn.azure_rm_virtualnetworkgatewayconnection_info:
         tags:
           - testing
 '''
@@ -71,7 +71,7 @@ RETURN = '''
         type: str
         choices: ["IKEv2", "IKEv1"]
       connection_status:
-        description: 
+        description:
           - The virtual network gateway connection status.
           - Returned when name of the connection is specified.
         type: str

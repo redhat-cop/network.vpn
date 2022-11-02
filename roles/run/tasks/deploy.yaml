@@ -20,7 +20,7 @@
     file: "{{ data.configuration_file }}"
     name: configuration
 
-- name: "Validate configuration data against defined schema for provider - {{ provider }} and action - {{ action }}"
+- name: "Validate configuration data against defined schema for provider - {{ provider }}"
   ansible.utils.validate:
     data: "{{ configuration }}"
     criteria: "{{ lookup('file', 'files/schemas/providers/{{ provider }}/{{ action }}.json') | from_json }}"
@@ -29,7 +29,7 @@
     ansible_jsonschema_draft: draft7
   register: result
 
-- name: "Start {{ action }} action for provider {{ provider }}"
+- name: "Start action for {{ provider }}"
   ansible.builtin.include_tasks: "providers/{{ provider }}/{{ action }}.yaml"
 
 - name: Debug execution data

@@ -1,5 +1,5 @@
 ---
-# Example configuration_file data for provider Azure action configure_vpn
+# Example configuration_file data for provider Azure action deploy
 # The path to a file containing these variables has to be passed to the `configuration_file` option
 
 resource_group: example-RG

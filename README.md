@@ -31,7 +31,8 @@ See [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_gui
 
 ```yaml
 ---
-- hosts: localhost
+- name: Deploy and validate AWS and Azure tunnels
+  hosts: localhost
   gather_facts: true
   tasks:
     - name: "Run network.vpn collection with specified actions"
@@ -39,12 +40,12 @@ See [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_gui
         name: network.vpn.run
       vars:
         actions:
-          - name: configure_vpn
+          - name: deploy
             vars:
               provider: aws
               configuration_file: aws.yaml
           
-          - name: configure_vpn
+          - name: deploy
             vars:
               provider: azure
               configuration_file: azure.yaml
@@ -67,7 +68,8 @@ See [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_gui
 
 ```yaml
 ---
-- hosts: csr_gateways
+- name: Deploy and Validate CSR tunnels
+  hosts: csr_gateways
   gather_facts: true
   tasks:
     - name: "Run network.vpn collection with specified actions"
@@ -76,7 +78,7 @@ See [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_gui
       vars:
         provider: csr
         actions:
-          - name: configure_vpn
+          - name: deploy
             vars:
               configuration_file: "{{ inventory_hostname }}.yaml"
 
@@ -91,13 +93,13 @@ See [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_gui
 
 | **Provider**           | **Actions**                                                 | **Action Options**  |
 |------------------------|-------------------------------------------------------------|----------------------
-| aws                    | configure_vpn                                               | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/aws/configure_vpn.yaml)
+| aws                    | deploy                                                      | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/aws/deploy.yaml)
 |                        | validate                                                    | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/aws/validate.yaml)
 |                        |                                                             |
-| aws                    | configure_vpn                                               | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/azure/configure_vpn.yaml)
+| azure                  | deploy                                                      | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/azure/deploy.yaml)
 |                        | validate                                                    | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/azure/validate.yaml)
 |                        |                                                             |
-| csr                    | configure_vpn                                               | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/csr/validate.yaml)
+| csr                    | deploy                                                      | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/csr/validate.yaml)
 |                        | validate                                                    | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/csr/validate.yaml)
 
 

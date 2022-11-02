@@ -1,5 +1,5 @@
 ---
-# Example configuration_file data for provider AWS action configure_vpn
+# Example configuration_file data for provider AWS action deploy
 # The path to a file containing these variables has to be passed to the `configuration_file` option
 
 region: ap-southeast-1
@@ -21,5 +21,5 @@ vpn_connection:
     - PreSharedKey: SuperSecretPassword
   routes:
     - 172.16.0.0/16
-  static_only: True
+  static_only: true
   vpn_gateway_id: vgw-056d1a789ae73867c

@@ -79,7 +79,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
     - name: Create Virtual Network Gateway Connection
-      azure.azcollection.azure_rm_virtualnetworkgatewayconnection:
+      network.vpn.azure_rm_virtualnetworkgatewayconnection:
         name: Test-VN-GW-Conn
         location: West US 3
         resource_group: VPN-RG
@@ -91,7 +91,7 @@ EXAMPLES = '''
         state: present
 
     - name: Delete Virtual Network Gateway Connections
-      azure.azcollection.azure_rm_virtualnetworkgatewayconnection:
+      network.vpn.azure_rm_virtualnetworkgatewayconnection:
         name: Test-VN-GW-Conn
         location: West US 3
         resource_group: VPN-RG

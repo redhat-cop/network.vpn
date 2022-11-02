@@ -11,7 +11,7 @@
   ansible.builtin.set_fact:
     tunnel: "{{ result.parsed.interface[data.tunnel] }}"
 
-- name: "Validate tunnel - {{ data.tunnel }} session status"
+- name: "Validate session status for tunnel - {{ data.tunnel }}"
   ansible.builtin.assert:
     that:
       - "{{ tunnel.session_status == data.session_status }}"

@@ -2,7 +2,8 @@
 # Example options for provider AWS action validate
 # These options have to provided under `vars` key for the action validate
 
-region: ap-southeast-1 # optional if action validate is run after action configure_vpn 
+region: ap-southeast-1 # optional if action validate is run after action deploy
+
 tunnel: 1
 session_status: Connected
-vpn_connection_id: vpn-1122334455aabbccd # optional if action validate is run after action configure_vpn 
+vpn_connection_id: vpn-1122334455aabbccd # optional if action validate is run after action deploy
