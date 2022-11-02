@@ -28,7 +28,7 @@
     tunnel_config: "{{ tunnel_config + ['ipv6 address {{ configuration.tunnel_interface.ipv6.address }} {{ configuration.tunnel_interface.ipv6.netmask }}'] }}"
   when: configuration.tunnel_interface.ipv6 is defined
 
-- name: "Create tunnel interface - {{ configuration.tunnel_interface.name }} with provided configuration"
+- name: "Create tunnel interface - {{ configuration.tunnel_interface.name }}"
   cisco.ios.ios_config:
     lines: "{{ tunnel_config }}"
     parents: "interface {{ configuration.tunnel_interface.name }}"

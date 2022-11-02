@@ -58,7 +58,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
     - name: Create Azure Local Network Gateway
-      azure.azcollection.azure_rm_localnetworkgateway:
+      network.vpn.azure_rm_localnetworkgateway:
         name: Test-VPN
         location: West US 3
         resource_group: Test-VPN-RG

@@ -1,8 +1,8 @@
 ---
-# Example configuration_file data for provider CSR action configure_vpn
+# Example configuration_file data for provider CSR action deploy
 # The path to a file containing these variables has to be passed to the `configuration_file` option
 
-vpn_profile: 
+vpn_profile:
   name: default
   remote_fqdn: example.org
   local_fqdn: csr1.example.org
@@ -10,9 +10,9 @@ vpn_profile:
     remote_psk: SuperSecretPassword
     local_psk: SuperSecretPassword
 
-tunnel_interface: 
+tunnel_interface:
   name: Tunnel0
-  ipv4: 
+  ipv4:
     address: 172.16.0.1
     netmask: 255.255.255.252
   source: GigabitEthernet1
