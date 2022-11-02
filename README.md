@@ -99,7 +99,7 @@ See [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_gui
 | azure                  | deploy                                                      | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/azure/deploy.yaml)
 |                        | validate                                                    | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/azure/validate.yaml)
 |                        |                                                             |
-| csr                    | deploy                                                      | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/csr/validate.yaml)
+| csr                    | deploy                                                      | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/csr/deploy.yaml)
 |                        | validate                                                    | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/csr/validate.yaml)
 
 
