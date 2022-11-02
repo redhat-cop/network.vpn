@@ -73,8 +73,8 @@ options:
     description: Bypass ExpressRoute Gateway for data forwarding.
     type: bool
 extends_documentation_fragment:
-    - network.vpn.azure
-    - network.vpn.azure_tags
+    - azure.azcollection.azure
+    - azure.azcollection.azure_tags
 '''
 
 EXAMPLES = '''
@@ -111,7 +111,7 @@ try:
 except ImportError:
     # This is handled in azure_rm_common
     pass
-from ansible_collections.network.vpn.plugins.module_utils.azure_rm_common import AzureRMModuleBase
+from ansible_collections.azure.azcollection.plugins.module_utils.azure_rm_common import AzureRMModuleBase
 
 
 def vngwconn_to_dict(vngwconn):
