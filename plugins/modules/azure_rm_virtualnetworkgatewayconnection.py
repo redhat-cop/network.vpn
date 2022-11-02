@@ -72,9 +72,6 @@ options:
   express_route_gateway_bypass:
     description: Bypass ExpressRoute Gateway for data forwarding.
     type: bool
-extends_documentation_fragment:
-    - azure.azcollection.azure
-    - azure.azcollection.azure_tags
 '''
 
 EXAMPLES = '''

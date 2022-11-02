@@ -51,9 +51,6 @@ options:
       peer_weight:
         description: The weight added to routes learned from this BGP speaker.
         type: int
-extends_documentation_fragment:
-    - azure.azcollection.azure
-    - azure.azcollection.azure_tags
 '''
 
 EXAMPLES = '''

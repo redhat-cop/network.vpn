@@ -109,6 +109,16 @@ This following collections should be installed:
 - cisco.ios
 - community.aws
 
+### Code of Conduct
+This collection follows the Ansible project's
+[Code of Conduct](https://docs.ansible.com/ansible/devel/community/code_of_conduct.html).
+Please read and familiarize yourself with this document.
+
+
+## Release notes
+
+Release notes are available [here](https://github.com/redhat-cop/network.vpn/blob/main/CHANGELOG.rst).
+
 ## Licensing
 
 GNU General Public License v3.0 or later.

@@ -1,0 +1,10 @@
+ancestor: null
+releases:
+  1.0.0:
+    changes:
+      release_summary: Releasing v1.0.0 of the Ansible network.vpn collection that
+        builds, maintains and validates VPN tunnels across cloud providers and network
+        appliances.
+    fragments:
+      - release_1.0.0.yaml
+    release_date: '2022-11-02'
