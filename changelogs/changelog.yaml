@@ -6,5 +6,5 @@ releases:
         builds, maintains and validates VPN tunnels across cloud providers and network
         appliances.
     fragments:
-    - release_1.0.0.yaml
+      - release_1.0.0.yaml
     release_date: '2022-11-02'
