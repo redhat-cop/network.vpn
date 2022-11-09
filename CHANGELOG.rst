@@ -5,6 +5,14 @@ Cisco Nxos Collection Release Notes
 .. contents:: Topics
 
 
+v1.3.0
+======
+
+Release Summary
+---------------
+
+Re-releasing v1.2.0 with bumped galaxy.yml version.
+
 v1.2.0
 ======
 
