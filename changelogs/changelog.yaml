@@ -15,3 +15,10 @@ releases:
     fragments:
       - prep_1.1.0.yaml
     release_date: '2022-11-09'
+  1.2.0:
+    changes:
+      release_summary: Fixed errors that were reported during ansible-galaxy collection
+        publish process for v1.1.0.
+    fragments:
+      - prep_120.yaml
+    release_date: '2022-11-09'
