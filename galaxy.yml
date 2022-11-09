@@ -10,7 +10,7 @@ name: vpn
 namespace: network
 description: Ansible Collection to build, maintain and validate VPN tunnels across cloud providers and network appliances.
 readme: README.md
-repository: https://github.com/ansible-collections/ansible.vpn
-issues: https://github.com/ansible-collections/ansible.vpn
+repository: https://github.com/redhat-cop/network.vpn
+issues: https://github.com/redhat-cop/network.vpn/issues
 tags: [cisco, aws, azure, vpn]
-version: 0.0.0
+version: 1.1.0
