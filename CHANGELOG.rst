@@ -1,5 +1,5 @@
 ===================================
-Cisco Nxos Collection Release Notes
+Network VPN Collection Release Notes
 ===================================
 
 .. contents:: Topics
