@@ -13,7 +13,7 @@ Tested with ansible-core 2.13 releases.
 ## Installation
 
 ```
-ansible-galaxy collection install network.vpn
+ansible-galaxy collection install git+https://github.com/redhat-cop/network.vpn
 ```
 
 You can also include it in a `requirements.yml` file and install it via `ansible-galaxy collection install -r requirements.yml` using the format:
