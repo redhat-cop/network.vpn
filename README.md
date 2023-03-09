@@ -20,7 +20,9 @@ You can also include it in a `requirements.yml` file and install it via `ansible
 
 ```yaml
 collections:
-- name: network.vpn
+- name: https://github.com/redhat-cop/network.vpn.git
+  type: git
+  version: main
 ```
 
 See [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) for more details.
