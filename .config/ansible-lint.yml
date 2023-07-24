@@ -1,0 +1,3 @@
+---
+skip_list:
+  - sanity[cannot-ignore] # some sanity ignores needed due to problems in azure.azcollection

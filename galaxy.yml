@@ -12,5 +12,5 @@ description: Ansible Collection to build, maintain and validate VPN tunnels acro
 readme: README.md
 repository: https://github.com/redhat-cop/network.vpn
 issues: https://github.com/redhat-cop/network.vpn/issues
-tags: [cisco, aws, azure, vpn]
+tags: [cisco, aws, azure, vpn, cloud, networking]
 version: 1.3.0

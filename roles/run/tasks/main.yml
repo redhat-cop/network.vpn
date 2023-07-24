@@ -3,6 +3,6 @@
   ansible.builtin.debug:
     msg: "Starting ansible.vpn.run"
 
-- name: "Load and run specified actions"
+- name: "Load and run specified operations"
   ansible.builtin.include_tasks: "{{ item.name }}.yaml"
-  loop: "{{ actions }}"
+  loop: "{{ operations }}"
