@@ -10,14 +10,14 @@ on:  # yamllint disable-line rule:truthy
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '* * * * *'
 
 jobs:
   ansible-lint:
     uses: ansible-network/github_actions/.github/workflows/ansible-lint.yml@main
   changelog:
     uses: ansible-network/github_actions/.github/workflows/changelog.yml@main
-    if: github.event_name == 'pull_request'
+    if: github.event_name != 'schedule'
   sanity:
     uses: ansible-network/github_actions/.github/workflows/sanity.yml@main
     with:
