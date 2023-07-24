@@ -1,6 +1,6 @@
 # Network VPN Validated Content
 
-[![CI](https://github.com/redhat-cop/network.vpn/actions/workflows/tests.yml/badge.svg?branch=main&event=schedule)](https://github.com/redhat-cop/network.vpn/actions/workflows/tests.yml)
+[![CI](https://github.com/redhat-cop/network.vpn/actions/workflows/test.yml/badge.svg)](https://github.com/redhat-cop/network.vpn/actions/workflows/test.yml)
 [![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/7639/badge)](https://bestpractices.coreinfrastructure.org/projects/7639)
 
 This repository contains the `network.vpn` Ansible Collection.
@@ -15,8 +15,6 @@ Tested with ansible-core >=2.13 releases.
 
 
 ## Installation
-
-#### Install from Automation Hub
 
 To consume this Validated Content from Automation Hub, the following needs to be added to `ansible.cfg`:
 
@@ -35,21 +33,6 @@ With this configured, simply run the following commands:
 
 ```
 ansible-galaxy collection install network.vpn
-```
-
-#### Install from GitHub
-
-```
-ansible-galaxy collection install git+https://github.com/redhat-cop/network.vpn
-```
-
-You can also include it in a `requirements.yml` file and install it via `ansible-galaxy collection install -r requirements.yml` using the format:
-
-```yaml
-collections:
-- name: https://github.com/redhat-cop/network.telemetry.git
-  type: git
-  version: main
 ```
 
 ## Using this collection
