@@ -1,26 +1,26 @@
 ---
 - name: Debug execution data
   ansible.builtin.debug:
-    msg: "Running validate action"
+    msg: "Running validate operation"
 
-- name: Load action variables
+- name: Load operation variables
   ansible.builtin.set_fact:
-    action: "{{ item.name }}"
+    operation: "{{ item.name }}"
     data: "{{ item.vars | d({}) }}"
     provider: "{{ item.vars.provider | d(provider) }}"
 
 - name: "Validate configuration data against defined schema for provider - {{ provider }}"
   ansible.utils.validate:
     data: "{{ data }}"
-    criteria: "{{ lookup('file', 'files/schemas/providers/{{ provider }}/{{ action }}.json') | from_json }}"
+    criteria: "{{ lookup('file', 'files/schemas/providers/{{ provider }}/{{ operation }}.json') | from_json }}"
     engine: ansible.utils.jsonschema
   vars:
     ansible_jsonschema_draft: draft7
   register: result
 
-- name: "Start action for provider {{ provider }}"
-  ansible.builtin.include_tasks: "providers/{{ provider }}/{{ action }}.yaml"
+- name: "Start operation for provider {{ provider }}"
+  ansible.builtin.include_tasks: "providers/{{ provider }}/{{ operation }}.yaml"
 
 - name: Debug execution data
   ansible.builtin.debug:
-    msg: "Completed validate action"
+    msg: "Completed validate operation"

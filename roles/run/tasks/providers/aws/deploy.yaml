@@ -37,7 +37,7 @@
     tunnel_options: "{{ configuration.vpn_connection.tunnel_options }}"
   register: vpn_connection
 
-- name: Set VPN connection facts as a fall back for validate action
+- name: Set VPN connection facts as a fall back for validate operation
   ansible.builtin.set_fact:
     region: "{{ configuration.region }}"
     vpn_connection_id: "{{ vpn_connection.vpn_connection_id }}"

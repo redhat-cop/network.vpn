@@ -30,7 +30,7 @@
     connection_protocol: "{{ configuration.vpn_connection.connection_protocol }}"
     shared_key: "{{ configuration.vpn_connection.pre_shared_key }}"
 
-- name: Set VPN connection facts as a fall back for validate action
+- name: Set VPN connection facts as a fall back for validate operation
   ansible.builtin.set_fact:
     region: "{{ configuration.region }}"
     resource_group: "{{ configuration.resource_group }}"
