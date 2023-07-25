@@ -103,14 +103,14 @@ ansible-galaxy collection install network.vpn
 
 | **Provider**           | **Operations**                                                 | **Operation Options**  |
 |------------------------|-------------------------------------------------------------|---------------------------
-| aws                    | deploy                                                      | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/aws/deploy.yaml)
-|                        | validate                                                    | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/aws/validate.yaml)
+| aws                    | deploy                                                      | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/aws/deploy.yaml)
+|                        | validate                                                    | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/aws/validate.yaml)
 |                        |                                                             |
-| azure                  | deploy                                                      | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/azure/deploy.yaml)
-|                        | validate                                                    | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/azure/validate.yaml)
+| azure                  | deploy                                                      | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/azure/deploy.yaml)
+|                        | validate                                                    | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/azure/validate.yaml)
 |                        |                                                             |
-| csr                    | deploy                                                      | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/csr/deploy.yaml)
-|                        | validate                                                    | [Options](https://github.com/ansible-network/network.vpn/blob/main/docs/providers/csr/validate.yaml)
+| csr                    | deploy                                                      | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/csr/deploy.yaml)
+|                        | validate                                                    | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/csr/validate.yaml)
 
 
 ## Requirements
