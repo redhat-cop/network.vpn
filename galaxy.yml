@@ -13,4 +13,4 @@ readme: README.md
 repository: https://github.com/redhat-cop/network.vpn
 issues: https://github.com/redhat-cop/network.vpn/issues
 tags: [cisco, aws, azure, vpn, cloud, networking]
-version: 1.3.0
+version: 2.0.0
