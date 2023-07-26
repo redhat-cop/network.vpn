@@ -1,9 +1,24 @@
-===================================
+====================================
 Network VPN Collection Release Notes
-===================================
+====================================
 
 .. contents:: Topics
 
+
+v2.0.0
+======
+
+Major Changes
+-------------
+
+- Staring with this release, the keyword `actions` has been changed to `operations`. 
+- Please refer to README for updated examples.
+
+Documentation Changes
+---------------------
+
+- Fix installation guide in README.
+- Update readme with collections installation commands.
 
 v1.3.0
 ======

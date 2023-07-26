@@ -28,3 +28,16 @@ releases:
     fragments:
       - prep_130.yaml
     release_date: '2022-11-09'
+  2.0.0:
+    changes:
+      doc_changes:
+        - Fix installation guide in README.
+        - Update readme with collections installation commands.
+      major_changes:
+        - Staring with this release, the keyword `actions` has been changed to `operations`.
+        - Please refer to README for updated examples.
+    fragments:
+      - readme.yaml
+      - update_docs.yaml
+      - update_readme.yaml
+    release_date: '2023-07-26'
