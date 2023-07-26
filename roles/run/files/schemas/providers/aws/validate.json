@@ -1,6 +1,6 @@
 {
     "description": "JSON Schema for Ansible VPN Collection",
-    "title": "Validate action schema for provider aws",
+    "title": "Validate operation schema for provider aws",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "properties": {

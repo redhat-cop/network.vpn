@@ -101,6 +101,7 @@ ansible-galaxy collection install network.vpn
 ## Supported providers
 
 
+<<<<<<< HEAD
 | **Provider**           | **Operations**                                                 | **Operation Options**  |
 |------------------------|-------------------------------------------------------------|---------------------------
 | aws                    | deploy                                                      | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/aws/deploy.yaml)
