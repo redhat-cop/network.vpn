@@ -114,7 +114,7 @@ ansible-galaxy collection install network.vpn
 
 
 ## Requirements
-This following collections should be installed:
+The following collections should be installed:
 - azure.azcollection
 - cisco.ios
 - community.aws

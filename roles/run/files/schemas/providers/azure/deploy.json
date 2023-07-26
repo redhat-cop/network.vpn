@@ -1,6 +1,6 @@
 {
     "description": "JSON Schema for Ansible VPN Collection",
-    "title": "Configure VPN action schema for provider azure",
+    "title": "Configure VPN operation schema for provider azure",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "properties": {
