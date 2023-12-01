@@ -37,8 +37,8 @@ releases:
         - Fix installation guide in README.
         - Update readme with collections installation commands.
       major_changes:
-        - Staring with this release, the keyword `actions` has been changed to `operations`.
         - Please refer to README for updated examples.
+        - Staring with this release, the keyword `actions` has been changed to `operations`.
     fragments:
       - readme.yaml
       - update_docs.yaml
@@ -55,4 +55,13 @@ releases:
         ansible-core<2.14 is `v2.0.0`.
     fragments:
       - prep_200.yaml
+    release_date: "2023-12-01"
+  3.0.1:
+    changes:
+      release_summary:
+        Re-releasing 3.0.0 as 3.0.1, starting from 3.0.0, the minimum
+        `ansible-core` version this collection requires is `2.14.0`. The last known
+        version compatible with ansible-core<2.14 is `2.0.0`.
+    fragments:
+      - release_301.yml
     release_date: "2023-12-01"

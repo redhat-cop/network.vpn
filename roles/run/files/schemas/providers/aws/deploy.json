@@ -1,92 +1,78 @@
 {
-    "description": "JSON Schema for Ansible VPN Collection",
-    "title": "Configure VPN operation schema for provider aws",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "type": "object",
-    "properties": {
-        "region": {
-            "type": "string"
-        },
-        "vpc_id": {
-            "type": "string"
-        },
-        "virtual_gateway": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "vgw_type": {
-                    "name": {
-                        "type": "string"
-                    }
-                }
-            },
-            "required": [
-                "name"
-            ]
-        },
-        "customer_gateway": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "ip_address": {
-                    "type": "string"
-                },
-                "routing": {
-                    "type": "string",
-                    "enum": [
-                        "static",
-                        "dynamic"
-                    ]
-                }
-            },
-            "required": [
-                "name",
-                "ip_address"
-            ]
-        },
-        "vpn_connection": {
-            "type": "object",
-            "properties": {
-                "static_only": {
-                    "type": "boolean"
-                },
-                "vpn_gateway_id": {
-                    "type": "string"
-                },
-                "tunnel_options": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "PreSharedKey": {
-                                "type": "string"
-                            },
-                            "TunnelInsideCidr": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                },
-                "routes": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
-            },
-            "required": [
-                "tunnel_options"
-            ]
-        }
+  "description": "JSON Schema for Ansible VPN Collection",
+  "title": "Configure VPN operation schema for provider aws",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "region": {
+      "type": "string"
     },
-    "required": [
-        "region",
-        "customer_gateway",
-        "vpn_connection"
-    ],
-    "additionalProperties": false
+    "vpc_id": {
+      "type": "string"
+    },
+    "virtual_gateway": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "vgw_type": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["name"]
+    },
+    "customer_gateway": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "ip_address": {
+          "type": "string"
+        },
+        "routing": {
+          "type": "string",
+          "enum": ["static", "dynamic"]
+        }
+      },
+      "required": ["name", "ip_address"]
+    },
+    "vpn_connection": {
+      "type": "object",
+      "properties": {
+        "static_only": {
+          "type": "boolean"
+        },
+        "vpn_gateway_id": {
+          "type": "string"
+        },
+        "tunnel_options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "PreSharedKey": {
+                "type": "string"
+              },
+              "TunnelInsideCidr": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "routes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["tunnel_options"]
+    }
+  },
+  "required": ["region", "customer_gateway", "vpn_connection"],
+  "additionalProperties": false
 }

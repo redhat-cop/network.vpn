@@ -12,8 +12,8 @@
 - name: Assert that configuration file is provided
   ansible.builtin.assert:
     that: data.configuration_file is defined
-    fail_msg: 'configuration file path for configure_vpn operation is undefined!'
-    success_msg: 'configuration file path provided!'
+    fail_msg: "configuration file path for configure_vpn operation is undefined!"
+    success_msg: "configuration file path provided!"
 
 - name: Load data from provided configuration file for configure_vpn operation
   ansible.builtin.include_vars:

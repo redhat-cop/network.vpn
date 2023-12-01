@@ -5,6 +5,14 @@ Network VPN Collection Release Notes
 .. contents:: Topics
 
 
+v3.0.1
+======
+
+Release Summary
+---------------
+
+Re-releasing 3.0.0 as 3.0.1, starting from 3.0.0, the minimum `ansible-core` version this collection requires is `2.14.0`. The last known version compatible with ansible-core<2.14 is `2.0.0`.
+
 v3.0.0
 ======
 
@@ -24,8 +32,8 @@ v2.0.0
 Major Changes
 -------------
 
-- Staring with this release, the keyword `actions` has been changed to `operations`.
 - Please refer to README for updated examples.
+- Staring with this release, the keyword `actions` has been changed to `operations`.
 
 Documentation Changes
 ---------------------
