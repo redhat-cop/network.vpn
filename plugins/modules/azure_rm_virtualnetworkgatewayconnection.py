@@ -75,24 +75,24 @@ options:
 '''
 
 EXAMPLES = '''
-    - name: Create Virtual Network Gateway Connection
-      network.vpn.azure_rm_virtualnetworkgatewayconnection:
-        name: Test-VN-GW-Conn
-        location: West US 3
-        resource_group: VPN-RG
-        virtual_network_gateway1: VPN-VNG
-        local_network_gateway: Local-NW-GW
-        connection_type: IPsec
-        connection_protocol: IKEv2
-        shared_key: SuperSecretKey
-        state: present
+- name: Create Virtual Network Gateway Connection
+  network.vpn.azure_rm_virtualnetworkgatewayconnection:
+    name: Test-VN-GW-Conn
+    location: West US 3
+    resource_group: VPN-RG
+    virtual_network_gateway1: VPN-VNG
+    local_network_gateway: Local-NW-GW
+    connection_type: IPsec
+    connection_protocol: IKEv2
+    shared_key: SuperSecretKey
+    state: present
 
-    - name: Delete Virtual Network Gateway Connections
-      network.vpn.azure_rm_virtualnetworkgatewayconnection:
-        name: Test-VN-GW-Conn
-        location: West US 3
-        resource_group: VPN-RG
-        state: absent
+- name: Delete Virtual Network Gateway Connections
+  network.vpn.azure_rm_virtualnetworkgatewayconnection:
+    name: Test-VN-GW-Conn
+    location: West US 3
+    resource_group: VPN-RG
+    state: absent
 '''
 
 RETURN = '''

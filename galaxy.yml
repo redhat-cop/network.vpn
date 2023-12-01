@@ -2,7 +2,7 @@
 authors:
   - Nilashish Chakraborty (@NilashishC)
 dependencies:
-  "cisco.ios": ">=3.0.0"
+  "cisco.ios": ">=6.0.0"
   "azure.azcollection": ">=1.13.0"
   "community.aws": ">=4.2.0"
 license_file: LICENSE
@@ -13,4 +13,4 @@ readme: README.md
 repository: https://github.com/redhat-cop/network.vpn
 issues: https://github.com/redhat-cop/network.vpn/issues
 tags: [cisco, aws, azure, vpn, cloud, networking]
-version: 2.0.0
+version: 3.0.0

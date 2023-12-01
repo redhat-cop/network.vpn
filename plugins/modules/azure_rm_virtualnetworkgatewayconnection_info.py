@@ -2,10 +2,11 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
 module: azure_rm_virtualnetworkgatewayconnection_info
 version_added: "1.14.0"
@@ -24,24 +25,24 @@ options:
     description: Limit results by providing a list of tags. Format tags as 'key' or 'key:value'.
     type: list
     elements: str
-'''
+"""
 
-EXAMPLES = '''
-    - name: Get facts for one virtual network connection
-      network.vpn.azure_rm_virtualnetworkgatewayconnection_info:
-        resource_group: myResourceGroup
-        name: vpn-conn
+EXAMPLES = """
+- name: Get facts for one virtual network connection
+  network.vpn.azure_rm_virtualnetworkgatewayconnection_info:
+    resource_group: myResourceGroup
+    name: vpn-conn
 
-    - name: Get facts for all virtual network connections in a resource group
-      network.vpn.azure_rm_virtualnetworkgatewayconnection_info:
-        resource_group: myResourceGroup
+- name: Get facts for all virtual network connections in a resource group
+  network.vpn.azure_rm_virtualnetworkgatewayconnection_info:
+    resource_group: myResourceGroup
 
-    - name: Get facts by tags
-      network.vpn.azure_rm_virtualnetworkgatewayconnection_info:
-        tags:
-          - testing
-'''
-RETURN = '''
+- name: Get facts by tags
+  network.vpn.azure_rm_virtualnetworkgatewayconnection_info:
+    tags:
+      - testing
+"""
+RETURN = """
   virtualnetworkgatewayconnections:
     description:
         - List of virtual network gateway connection dicts.
@@ -115,30 +116,27 @@ RETURN = '''
       virtual_network_gateway2:
         description: The virtual network gateway resource.
         type: dict
-'''
+"""
 try:
     from azure.core.exceptions import ResourceNotFoundError
 except Exception:
     # This is handled in azure_rm_common
     pass
 
-from ansible_collections.azure.azcollection.plugins.module_utils.azure_rm_common import AzureRMModuleBase
+from ansible_collections.azure.azcollection.plugins.module_utils.azure_rm_common import (
+    AzureRMModuleBase,
+)
 
 
 class AzureRMVirtualNetworkGatewayConnectionInfo(AzureRMModuleBase):
-
     def __init__(self):
-
         self.module_arg_spec = dict(
-            name=dict(type='str'),
-            resource_group=dict(type='str'),
-            tags=dict(type='list', elements='str'),
+            name=dict(type="str"),
+            resource_group=dict(type="str"),
+            tags=dict(type="list", elements="str"),
         )
 
-        self.results = dict(
-            changed=False,
-            virtualnetworkgatewayconnections=[]
-        )
+        self.results = dict(changed=False, virtualnetworkgatewayconnections=[])
 
         self.name = None
         self.resource_group = None
@@ -148,7 +146,7 @@ class AzureRMVirtualNetworkGatewayConnectionInfo(AzureRMModuleBase):
             self.module_arg_spec,
             supports_check_mode=True,
             supports_tags=False,
-            facts_module=True
+            facts_module=True,
         )
 
     def exec_module(self, **kwargs):
@@ -160,17 +158,19 @@ class AzureRMVirtualNetworkGatewayConnectionInfo(AzureRMModuleBase):
         elif self.resource_group is not None:
             results = self.list_resource_group()
 
-        self.results['virtualnetworkgatewayconnections'] = self.curated(results)
+        self.results["virtualnetworkgatewayconnections"] = self.curated(results)
 
         return self.results
 
     def get_item(self):
-        self.log('Get properties for {0}'.format(self.name))
+        self.log("Get properties for {0}".format(self.name))
         item = None
         results = []
 
         try:
-            item = self.network_client.virtual_network_gateway_connections.get(self.resource_group, self.name)
+            item = self.network_client.virtual_network_gateway_connections.get(
+                self.resource_group, self.name
+            )
         except ResourceNotFoundError:
             pass
 
@@ -179,11 +179,17 @@ class AzureRMVirtualNetworkGatewayConnectionInfo(AzureRMModuleBase):
         return results
 
     def list_resource_group(self):
-        self.log('List items for resource group')
+        self.log("List items for resource group")
         try:
-            response = self.network_client.virtual_network_gateway_connections.list(self.resource_group)
+            response = self.network_client.virtual_network_gateway_connections.list(
+                self.resource_group
+            )
         except ResourceNotFoundError as exc:
-            self.fail("Failed to list for resource group {0} - {1}".format(self.resource_group, str(exc)))
+            self.fail(
+                "Failed to list for resource group {0} - {1}".format(
+                    self.resource_group, str(exc)
+                )
+            )
 
         results = []
         for item in response:
@@ -219,11 +225,15 @@ class AzureRMVirtualNetworkGatewayConnectionInfo(AzureRMModuleBase):
             virtual_network_gateway1=dict(id=vngwconn.virtual_network_gateway1.id),
         )
         if vngwconn.connection_status:
-            result['connection_status'] = vngwconn.connection_status
+            result["connection_status"] = vngwconn.connection_status
         if vngwconn.local_network_gateway2:
-            result['local_network_gateway2'] = dict(id=vngwconn.local_network_gateway2.id)
+            result["local_network_gateway2"] = dict(
+                id=vngwconn.local_network_gateway2.id
+            )
         if vngwconn.virtual_network_gateway2:
-            result['virtual_network_gateway2'] = dict(id=vngwconn.virtual_network_gateway2.id)
+            result["virtual_network_gateway2"] = dict(
+                id=vngwconn.virtual_network_gateway2.id
+            )
         return result
 
 
@@ -231,5 +241,5 @@ def main():
     AzureRMVirtualNetworkGatewayConnectionInfo()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
