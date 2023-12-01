@@ -6,13 +6,13 @@
 This repository contains the `network.vpn` Ansible Collection.
 
 ## Description
+
 An Ansible Collection to build, maintain and validate VPN tunnels across cloud providers and network appliances.
 See `Supported Providers` section for more details.
 
 ## Tested with Ansible
 
-Tested with ansible-core >=2.13 releases.
-
+Tested with ansible-core >=2.14 releases.
 
 ## Installation
 
@@ -27,6 +27,7 @@ url=https://cloud.redhat.com/api/automation-hub/
 auth_url=https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
 token=<SuperSecretToken>
 ```
+
 Get the required token from the [Automation Hub Web UI](https://console.redhat.com/ansible/automation-hub/token).
 
 With this configured, simply run the following commands:
@@ -54,7 +55,7 @@ ansible-galaxy collection install network.vpn
             vars:
               provider: aws
               configuration_file: aws.yaml
-          
+
           - name: deploy
             vars:
               provider: azure
@@ -65,7 +66,7 @@ ansible-galaxy collection install network.vpn
               provider: aws
               tunnel: 1
               session_status: UP
-          
+
           - name: validate
             vars:
               provider: azure
@@ -100,30 +101,30 @@ ansible-galaxy collection install network.vpn
 
 ## Supported providers
 
-
-| **Provider**           | **Operations**                                                 | **Operation Options**  |
-|------------------------|-------------------------------------------------------------|---------------------------
-| aws                    | deploy                                                      | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/aws/deploy.yaml)
-|                        | validate                                                    | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/aws/validate.yaml)
-|                        |                                                             |
-| azure                  | deploy                                                      | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/azure/deploy.yaml)
-|                        | validate                                                    | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/azure/validate.yaml)
-|                        |                                                             |
-| csr                    | deploy                                                      | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/csr/deploy.yaml)
-|                        | validate                                                    | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/csr/validate.yaml)
-
+| **Provider** | **Operations** | **Operation Options**                                                                             |
+| ------------ | -------------- | ------------------------------------------------------------------------------------------------- |
+| aws          | deploy         | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/aws/deploy.yaml)     |
+|              | validate       | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/aws/validate.yaml)   |
+|              |                |
+| azure        | deploy         | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/azure/deploy.yaml)   |
+|              | validate       | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/azure/validate.yaml) |
+|              |                |
+| csr          | deploy         | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/csr/deploy.yaml)     |
+|              | validate       | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/csr/validate.yaml)   |
 
 ## Requirements
+
 The following collections should be installed:
+
 - azure.azcollection
 - cisco.ios
 - community.aws
 
 ### Code of Conduct
+
 This collection follows the Ansible project's
 [Code of Conduct](https://docs.ansible.com/ansible/devel/community/code_of_conduct.html).
 Please read and familiarize yourself with this document.
-
 
 ## Release notes
 
