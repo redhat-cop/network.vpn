@@ -37,8 +37,8 @@ releases:
         - Fix installation guide in README.
         - Update readme with collections installation commands.
       major_changes:
-        - Please refer to README for updated examples.
         - Staring with this release, the keyword `actions` has been changed to `operations`.
+        - Please refer to README for updated examples.
     fragments:
       - readme.yaml
       - update_docs.yaml

@@ -24,8 +24,8 @@ v2.0.0
 Major Changes
 -------------
 
-- Please refer to README for updated examples.
 - Staring with this release, the keyword `actions` has been changed to `operations`.
+- Please refer to README for updated examples.
 
 Documentation Changes
 ---------------------
