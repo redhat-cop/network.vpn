@@ -7,7 +7,6 @@ __metaclass__ = type
 
 
 DOCUMENTATION = """
----
 module: azure_rm_localnetworkgateway
 version_added: "1.14.0"
 short_description: Manage Azure local network gateways

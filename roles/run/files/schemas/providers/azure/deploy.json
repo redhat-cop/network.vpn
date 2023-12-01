@@ -1,111 +1,104 @@
 {
-    "description": "JSON Schema for Ansible VPN Collection",
-    "title": "Configure VPN operation schema for provider azure",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "type": "object",
-    "properties": {
-        "region": {
-            "type": "string"
-        },
-        "resource_group": {
-            "type": "string"
-        },
-        "virtual_gateway": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "virtual_network": {
-                    "type": "string"
-                },
-                "vpn_type": {
-                    "type": "string",
-                    "enum": ["route_based", "policy_based"]
-                },
-                "sku": {
-                    "type": "string"
-                },
-                "ip_configurations": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string"
-                            },
-                            "public_ip_address_name": {
-                                "type": "string"
-                            },
-                            "subnet": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            },
-            "required": [
-                "name",
-                "vpn_type",
-                "sku"
-            ]
-        },
-        "local_gateway": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "gateway_ip_address": {
-                    "type": "string"
-                },
-                "local_network_address_space": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
-            },
-            "required": [
-                "name",
-                "gateway_ip_address"
-            ]
-        },
-        "vpn_connection": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "virtual_network_gateway1": {
-                    "type": "string"
-                },
-                "local_network_gateway": {
-                    "type": "string"
-                },
-                "connection_protocol": {
-                    "type": "string",
-                    "enum": ["IKEv2", "IKEv1"]
-                },
-                "pre_shared_key": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "name",
-                "virtual_network_gateway1",
-                "local_network_gateway",
-                "pre_shared_key",
-                "connection_protocol"
-            ]
-        }
+  "description": "JSON Schema for Ansible VPN Collection",
+  "title": "Configure VPN operation schema for provider azure",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "region": {
+      "type": "string"
     },
-    "required": [
-        "region",
-        "resource_group",
-        "virtual_gateway",
-        "local_gateway",
-        "vpn_connection"
-    ],
-    "additionalProperties": false
+    "resource_group": {
+      "type": "string"
+    },
+    "virtual_gateway": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "virtual_network": {
+          "type": "string"
+        },
+        "vpn_type": {
+          "type": "string",
+          "enum": ["route_based", "policy_based"]
+        },
+        "sku": {
+          "type": "string"
+        },
+        "ip_configurations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "public_ip_address_name": {
+                "type": "string"
+              },
+              "subnet": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "required": ["name", "vpn_type", "sku"]
+    },
+    "local_gateway": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "gateway_ip_address": {
+          "type": "string"
+        },
+        "local_network_address_space": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["name", "gateway_ip_address"]
+    },
+    "vpn_connection": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "virtual_network_gateway1": {
+          "type": "string"
+        },
+        "local_network_gateway": {
+          "type": "string"
+        },
+        "connection_protocol": {
+          "type": "string",
+          "enum": ["IKEv2", "IKEv1"]
+        },
+        "pre_shared_key": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "virtual_network_gateway1",
+        "local_network_gateway",
+        "pre_shared_key",
+        "connection_protocol"
+      ]
+    }
+  },
+  "required": [
+    "region",
+    "resource_group",
+    "virtual_gateway",
+    "local_gateway",
+    "vpn_connection"
+  ],
+  "additionalProperties": false
 }
