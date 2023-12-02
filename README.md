@@ -1,6 +1,6 @@
 # Network VPN Validated Content
 
-[![CI](https://github.com/redhat-cop/network.vpn/actions/workflows/test.yml/badge.svg)](https://github.com/redhat-cop/network.vpn/actions/workflows/test.yml)
+[![CI](https://github.com/redhat-cop/network.vpn/actions/workflows/tests.yml/badge.svg?branch=main&event=schedule)](https://github.com/redhat-cop/network.vpn/actions/workflows/tests.yml)
 [![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/7639/badge)](https://bestpractices.coreinfrastructure.org/projects/7639)
 
 This repository contains the `network.vpn` Ansible Collection.
