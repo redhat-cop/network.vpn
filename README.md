@@ -18,7 +18,7 @@ Tested with ansible-core >=2.14 releases.
 
 To consume this Validated Content from Automation Hub, the following needs to be added to `ansible.cfg`:
 
-```
+```ini
 [galaxy]
 server_list = automation_hub
 
@@ -32,7 +32,7 @@ Get the required token from the [Automation Hub Web UI](https://console.redhat.c
 
 With this configured, simply run the following commands:
 
-```
+```bash
 ansible-galaxy collection install network.vpn
 ```
 
