@@ -12,7 +12,7 @@ See `Supported Providers` section for more details.
 
 ## Tested with Ansible
 
-Tested with ansible-core >=2.14 releases.
+Tested with ansible-core >=2.15 releases.
 
 ## Installation
 
