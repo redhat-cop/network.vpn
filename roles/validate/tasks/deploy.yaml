@@ -1,0 +1,37 @@
+---
+- name: Debug execution data
+  ansible.builtin.debug:
+    msg: "Running configure_vpn operation"
+
+- name: Load operation variables
+  ansible.builtin.set_fact:
+    operation: "{{ item.name }}"
+    data: "{{ item.vars | d({}) }}"
+    provider: "{{ item.vars.provider | d(provider) }}"
+
+- name: Assert that configuration file is provided
+  ansible.builtin.assert:
+    that: data.configuration_file is defined
+    fail_msg: "configuration file path for configure_vpn operation is undefined!"
+    success_msg: "configuration file path provided!"
+
+- name: Load data from provided configuration file for configure_vpn operation
+  ansible.builtin.include_vars:
+    file: "{{ data.configuration_file }}"
+    name: configuration
+
+- name: "Validate configuration data against defined schema for provider - {{ provider }}"
+  ansible.utils.validate:
+    data: "{{ configuration }}"
+    criteria: "{{ lookup('file', 'files/schemas/providers/{{ provider }}/{{ operation }}.json') | from_json }}"
+    engine: ansible.utils.jsonschema
+  vars:
+    ansible_jsonschema_draft: draft7
+  register: result
+
+- name: "Start operation for {{ provider }}"
+  ansible.builtin.include_tasks: "providers/{{ provider }}/{{ operation }}.yaml"
+
+- name: Debug execution data
+  ansible.builtin.debug:
+    msg: "Completed configure_vpn operation"

@@ -1,7 +1,8 @@
 ---
-- name: Run network.vpn.deploy role
-  ansible.builtin.include_role:
-    name: network.vpn.deploy
-  vars:
-    provider: aws
-    configuration_file: aws.yaml
+- name: "Start network.vpn.run"
+  ansible.builtin.debug:
+    msg: "Starting ansible.vpn.run"
+
+- name: "Load and run specified operations"
+  ansible.builtin.include_tasks: "{{ item.name }}.yaml"
+  loop: "{{ operations }}"
