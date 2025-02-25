@@ -1,0 +1,24 @@
+# Start validate task for provider aws
+---
+- name: Check that all required information is set or fallback is available
+  ansible.builtin.assert:
+    that:
+      - data.resource_group is defined or resource_group is defined
+      - data.vpn_connection_name is defined or vpn_connection_name is defined
+    fail_msg: "Either resource_group or vpn_connection_name is undefined!"
+
+- name: Gather information about VPN connection
+  network.vpn.azure_rm_virtualnetworkgatewayconnection_info:
+    resource_group: "{{ data.resource_group | d(resource_group) }}"
+    name: "{{ data.vpn_connection_name | d(vpn_connection_name) }}"
+  register: result
+
+- name: Set connection status from gathered information
+  ansible.builtin.set_fact:
+    connection_status: "{{ result.virtualnetworkgatewayconnections[0].connection_status }}"
+
+- name: Validate VPN connection status
+  ansible.builtin.assert:
+    that: "{{ connection_status == data.session_status }}"
+    success_msg: "VPN connection {{ data.vpn_connection_name | d(vpn_connection_name) }} has passed session status validation!"
+    fail_msg: "VPN connection {{ data.vpn_connection_id | d(vpn_connection_name) }} session-status is {{ connection_status }}"

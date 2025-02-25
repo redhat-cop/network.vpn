@@ -1,0 +1,7 @@
+---
+- name: Run network.vpn.deploy role
+  ansible.builtin.include_role:
+    name: network.vpn.deploy
+  vars:
+    provider: aws
+    configuration_file: aws.yaml

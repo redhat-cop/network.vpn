@@ -1,0 +1,7 @@
+---
+- name: Run network.vpn.validate role
+  ansible.builtin.include_role:
+    name: network.vpn.validate
+  vars:
+    provider: aws
+    configuration_file: aws.yaml

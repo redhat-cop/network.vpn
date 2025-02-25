@@ -1,0 +1,43 @@
+# Start configure_vpn for provider aws
+---
+- name: "Create Virtual Gateway if specified"
+  community.aws.ec2_vpc_vgw:
+    region: "{{ configuration.region }}"
+    vpc_id: "{{ configuration.vpc_id }}"
+    name: "{{ configuration.virtual_gateway.name }}"
+    type: "{{ configuration.virtual_gateway.vgw_type }}"
+  register: virtual_gateway
+  when: configuration.virtual_gateway is defined
+
+- name: "Create Customer Gateway - {{ configuration.customer_gateway.name }}"
+  community.aws.ec2_customer_gateway:
+    region: "{{ configuration.region }}"
+    name: "{{ configuration.customer_gateway.name }}"
+    ip_address: "{{ configuration.customer_gateway.ip_address }}"
+    routing: "{{ configuration.customer_gateway.routing }}"
+  register: customer_gateway
+
+- name: Override Virtual Gateway id
+  ansible.builtin.set_fact:
+    vpn_gateway_id: "{{ virtual_gateway.vgw.id }}"
+  when: configuration.virtual_gateway is defined
+
+- name: Override Customer Gateway id
+  ansible.builtin.set_fact:
+    customer_gateway_id: "{{ customer_gateway.gateway.customer_gateway.customer_gateway_id }}"
+  when: configuration.customer_gateway is defined
+
+- name: "Create VPN Connection"
+  community.aws.ec2_vpc_vpn:
+    region: "{{ configuration.region }}"
+    customer_gateway_id: "{{ configuration.vpn_connection.customer_gateway_id | d(customer_gateway_id) }}"
+    vpn_gateway_id: "{{ configuration.vpn_connection.vpn_gateway_id | d(vpn_gateway_id) }}"
+    static_only: "{{ configuration.vpn_connection.static_only }}"
+    routes: "{{ configuration.vpn_connection.routes }}"
+    tunnel_options: "{{ configuration.vpn_connection.tunnel_options }}"
+  register: vpn_connection
+
+- name: Set VPN connection facts as a fall back for validate operation
+  ansible.builtin.set_fact:
+    region: "{{ configuration.region }}"
+    vpn_connection_id: "{{ vpn_connection.vpn_connection_id }}"
