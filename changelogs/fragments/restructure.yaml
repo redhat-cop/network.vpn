@@ -1,21 +1,21 @@
 ---
 major_changes:
-  - summary: "Restructured the network.vpn collection by converting supported operations into separate roles."
-    details: |
-      The following changes were made to the `network.vpn` collection:
-      - Converted operations like `deploy` and `validate` into individual roles for better modularity and clarity.
-      - Each role (`deploy`, `validate`) now has its own README.md and integration tests.
-      - Updated all integration tests to align with the new role-based structure.
-      - Improved documentation and usage examples for each role to reflect the restructuring.
-    issues:
-      - id: "ANA-691"
-        type: "feature"
-        link: "https://issues.redhat.com/browse/ANA-691"
-    impact:
-      - "Developers need to update their playbooks to use roles instead of operations."
-      - "Test cases and pipelines relying on operations must be updated to reference the new roles."
-    role_changes:
-      - deploy: "Now an independent role for deploying configurations based on inventory host_vars."
-      - validate: "Now an independent role for validating configurations based on inventory host_vars."
-    breaking_changes:
-      - "The `network.vpn.deploy` and `network.vpn.validate` operations are no longer available."
+  - "Restructured the network.vpn collection by converting supported operations into separate roles."
+details: |
+  The following changes were made to the `network.vpn` collection:
+  - Converted operations like `deploy` and `validate` into individual roles for better modularity and clarity.
+  - Each role (`deploy`, `validate`) now has its own README.md and integration tests.
+  - Updated all integration tests to align with the new role-based structure.
+  - Improved documentation and usage examples for each role to reflect the restructuring.
+issues:
+  - id: "ANA-691"
+    type: "feature"
+    link: "https://issues.redhat.com/browse/ANA-691"
+impact:
+  - "Developers need to update their playbooks to use roles instead of operations."
+  - "Test cases and pipelines relying on operations must be updated to reference the new roles."
+role_changes:
+  - deploy: "Now an independent role for deploying configurations based on inventory host_vars."
+  - validate: "Now an independent role for validating configurations based on inventory host_vars."
+breaking_changes:
+  - "The `network.vpn.deploy` and `network.vpn.validate` operations are no longer available."
