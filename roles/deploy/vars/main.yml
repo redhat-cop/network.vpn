@@ -1,5 +1,5 @@
 ---
-- providers:
+providers:
   - name: aws
   - name: azure
   - name: csr
