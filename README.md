@@ -46,33 +46,36 @@ ansible-galaxy collection install network.vpn
   hosts: localhost
   gather_facts: true
   tasks:
-    - name: "Run network.vpn collection with specified operations"
+    - name: "Deploy aws"
       ansible.builtin.include_role:
-        name: network.vpn.run
+        name: network.vpn.deploy
       vars:
-        operations:
-          - name: deploy
-            vars:
-              provider: aws
-              configuration_file: aws.yaml
+        provider: aws
+        configuration_file: aws.yaml
 
-          - name: deploy
-            vars:
-              provider: azure
-              configuration_file: azure.yaml
+    - name: "Deploy azure"
+      ansible.builtin.include_role:
+        name: network.vpn.deploy
+      vars:
+        provider: azure
+        configuration_file: azure.yaml
 
-          - name: validate
-            vars:
-              provider: aws
-              tunnel: 1
-              session_status: UP
+    - name: "Validate aws tunnel"
+      ansible.builtin.include_role:
+        name: network.vpn.validate
+      vars:
+        provider: aws
+        tunnel: 1
+        session_status: UP
 
-          - name: validate
-            vars:
-              provider: azure
-              resource_group: VPN-RG
-              vpn_connection_name: Azure-to-AWS
-              session_status: Connected
+    - name: "Validate azure tunnel"
+      ansible.builtin.include_role:
+        name: network.vpn.validate
+      vars:
+        provider: azure
+        resource_group: VPN-RG
+        vpn_connection_name: Azure-to-AWS
+        session_status: Connected
 ```
 
 ### Example 2
@@ -83,20 +86,19 @@ ansible-galaxy collection install network.vpn
   hosts: csr_gateways
   gather_facts: true
   tasks:
-    - name: "Run network.vpn collection with specified operations"
+    - name: "Invoke deploy role"
       ansible.builtin.include_role:
-        name: network.vpn.run
+        name: network.vpn.deploy
       vars:
         provider: csr
-        operations:
-          - name: deploy
-            vars:
-              configuration_file: "{{ inventory_hostname }}.yaml"
+        configuration_file: "{{ inventory_hostname }}.yaml"
 
-          - name: validate
-            vars:
-              tunnel: Tunnel0
-              session_status: Connected
+    - name: "Invoke validate role"
+      ansible.builtin.include_role:
+        name: network.vpn.validate
+      vars:
+        tunnel: Tunnel0
+        session_status: Connected
 ```
 
 ## Supported providers
