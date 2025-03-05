@@ -1,9 +1,7 @@
 # Deploy
 
-This role serves as the entry point for the `network.deploy` collection. Based on the provider and action specified, the correct tasks are deployed.
-
 ## Overview
-The `deploy` role reads VPN configuration details from the provided/default or remote inventory and applies them to network appliances. It ensures that VPN settings remain consistent and compliant across devices. Users can source configurations from local files or remote repositories and deploy only when changes are detected.
+The `deploy` role reads VPN configuration details from the provided/default or remote inventory and deploys them to network appliances. It ensures that VPN settings remain consistent and compliant across devices. Users can source configurations from local files or remote repositories and deploy only when changes are detected.
 
 ## Features
 - Retrieve VPN configuration data from local or remote sources.
@@ -36,7 +34,7 @@ Below is an example playbook demonstrating how to use the `deploy` role, where w
         tunnel: 1
         session_status: UP
 ```
-Example Output
+### Example Output
 When the playbook executes successfully, the output will show VPN configurations being applied. Verbose output can be enabled for debugging.
 
 ## License

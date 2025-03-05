@@ -1,0 +1,42 @@
+---
+- name: Debug
+  ansible.builtin.debug:
+    msg: "START network.vpn deploy role integration tests on connection={{ ansible_connection }}"
+
+- name: Cleanup and Deploy
+  block:
+    - name: Reset configuration
+      ansible.builtin.include_tasks: _cleanup.yaml
+
+    - name: Set local data_store
+      ansible.builtin.set_fact:
+        test_data_store:
+          local: "~/test_backup"
+
+    - name: Set resources
+      ansible.builtin.set_fact:
+        test_resources:
+          - name: "vpn"
+            vars:
+              provider: "aws"
+              configuration_file: "aws.yaml"
+
+    - name: Run network.vpn validated content with deploy operation
+      ansible.builtin.include_role:
+        name: network.vpn.deploy
+      vars:
+        data_store: "{{ test_data_store }}"
+      register: deploy_result
+
+    - name: Assert that gresult
+      ansible.builtin.assert:
+        that:
+          - deploy_result.changed == false
+
+  always:
+    - name: Reset configuration
+      ansible.builtin.include_tasks: _cleanup.yaml
+
+- name: Debug
+  ansible.builtin.debug:
+    msg: "END network.vpn deploy role integration tests on connection={{ ansible_connection }}"
