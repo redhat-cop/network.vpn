@@ -8,11 +8,6 @@
     - name: Reset configuration
       ansible.builtin.include_tasks: _cleanup.yaml
 
-    - name: Set local data_store
-      ansible.builtin.set_fact:
-        test_data_store:
-          local: "~/test_backup"
-
     - name: Set resources
       ansible.builtin.set_fact:
         test_resources:
@@ -21,7 +16,7 @@
               provider: "aws"
               configuration_file: "aws.yaml"
 
-    - name: Run network.vpn validated content with deploy operation
+    - name: Run network.vpn validated content with deploy role
       ansible.builtin.include_role:
         name: network.vpn.deploy
       vars:

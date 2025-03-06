@@ -2,9 +2,3 @@
 - name: "Start network.vpn.validate"
   ansible.builtin.debug:
     msg: "Starting ansible.vpn.validate"
-
-- name: "Load and deploy specified operations"
-  ansible.builtin.include_tasks: "{{ item.name }}.yaml"
-  loop: "{{ providers }}"
-  loop_control:
-    loop_var: item

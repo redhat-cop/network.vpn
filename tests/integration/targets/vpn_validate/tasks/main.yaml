@@ -8,11 +8,6 @@
     - name: Reset configuration
       ansible.builtin.include_tasks: _cleanup.yaml
 
-    - name: Set local data_store
-      ansible.builtin.set_fact:
-        test_data_store:
-          local: "~/test_backup"
-
     - name: Set resources
       ansible.builtin.set_fact:
         test_resources:
