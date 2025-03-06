@@ -1,7 +1,10 @@
 ---
-- name: Invoke deploy role
-  ansible.builtin.include_role:
-    name: network.base.deploy
-  vars:
-    provider: aws
-    configuration_file: aws.yaml
+- name: "Start network.vpn.deploy"
+  ansible.builtin.debug:
+    msg: "Starting ansible.vpn.deploy"
+
+- name: "Load and deploy specified operations"
+  ansible.builtin.include_tasks: "{{ item.name }}.yaml"
+  loop: "{{ providers }}"
+  loop_control:
+    loop_var: item

@@ -1,11 +1,10 @@
 ---
-- name: "Start network.vpn.validate role"
-  ansible.builtin.include_role:
-    name: network.vpn.validate
-  vars:
-    provider: azure
-    configuration_file: azure.yaml
+- name: "Start network.vpn.validate"
+  ansible.builtin.debug:
+    msg: "Starting ansible.vpn.validate"
 
-- name: "Include provider-specific validate tasks"
+- name: "Load and deploy specified operations"
   ansible.builtin.include_tasks: "{{ item.name }}.yaml"
   loop: "{{ providers }}"
+  loop_control:
+    loop_var: item
