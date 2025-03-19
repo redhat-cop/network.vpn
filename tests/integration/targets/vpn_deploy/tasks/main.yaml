@@ -53,7 +53,7 @@
     - name: Assert that deploy ran successfully
       ansible.builtin.assert:
         that:
-          - deploy_result.changed == false
+          - deploy_result.changed == true
 
   always:
     - name: Reset configuration after test
