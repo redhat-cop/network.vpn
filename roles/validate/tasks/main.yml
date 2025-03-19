@@ -2,3 +2,6 @@
 - name: "Start network.vpn.validate"
   ansible.builtin.debug:
     msg: "Starting ansible.vpn.validate"
+  vars:
+    provider: "aws"
+    configuration_file: "aws.yaml"

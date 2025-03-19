@@ -3,33 +3,60 @@
   ansible.builtin.debug:
     msg: "START network.vpn deploy role integration tests on connection={{ ansible_connection }}"
 
-- name: Cleanup and Deploy
+- name: Cleanup, Create Config, and Deploy
   block:
-    - name: Reset configuration
+    - name: Reset configuration before test
       ansible.builtin.include_tasks: _cleanup.yaml
 
-    - name: Set resources
+    - name: Define test configuration content
       ansible.builtin.set_fact:
-        test_resources:
-          - name: "vpn"
-            vars:
-              provider: "aws"
-              configuration_file: "aws.yaml"
+        test_vpn_config: |
+          provider: aws
+          tunnels:
+            - name: tunnel1
+              remote_ip: "203.0.113.1"
+              preshared_key: "test-key-123"
+            - name: tunnel2
+              remote_ip: "203.0.113.2"
+              preshared_key: "test-key-456"
 
-    - name: Run network.vpn validated content with deploy role
+    - name: Write test VPN configuration file
+      ansible.builtin.copy:
+        dest: "~/aws.yaml"
+        content: "{{ test_vpn_config }}"
+        mode: "0644"
+
+    - name: Set test data store
+      ansible.builtin.set_fact:
+        test_data_store:
+          local: "~/test_backup"
+
+    - name: Ensure configuration file exists
+      ansible.builtin.stat:
+        path: "~/aws.yaml"
+      register: config_file
+
+    - name: Assert configuration file exists
+      ansible.builtin.assert:
+        that:
+          - config_file.stat.exists
+        fail_msg: "Test configuration file is missing."
+
+    - name: Run network.vpn.deploy role
       ansible.builtin.include_role:
         name: network.vpn.deploy
       vars:
         data_store: "{{ test_data_store }}"
+        configuration_file: "~/aws.yaml"
       register: deploy_result
 
-    - name: Assert that gresult
+    - name: Assert that deploy ran successfully
       ansible.builtin.assert:
         that:
           - deploy_result.changed == false
 
   always:
-    - name: Reset configuration
+    - name: Reset configuration after test
       ansible.builtin.include_tasks: _cleanup.yaml
 
 - name: Debug
