@@ -1,0 +1,76 @@
+{
+    "description": "JSON Schema for Ansible VPN Collection",
+    "title": "Configure VPN operation schema",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "vpn_profile": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "remote_fqdn": {
+            "type": "string"
+          },
+          "local_fqdn": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "remote_fqdn", "local_fqdn"]
+      },
+      "tunnel_interface": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "ipv4": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "string",
+                "format": "ipv4"
+              },
+              "netmask": {
+                "type": "string"
+              }
+            }
+          },
+          "ipv6": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "string",
+                "format": "ipv4"
+              },
+              "netmask": {
+                "type": "string"
+              }
+            }
+          },
+          "source": {
+            "type": "string"
+          },
+          "destination": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "source", "destination"],
+        "anyOf": [{ "required": ["ipv4"] }, { "required": ["ipv6"] }]
+      },
+      "dead_peer_detection": {
+        "type": "object",
+        "properties": {
+          "interval": {
+            "type": "integer"
+          },
+          "retry": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "required": ["vpn_profile", "tunnel_interface"],
+    "additionalProperties": false
+  }

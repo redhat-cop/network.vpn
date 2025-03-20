@@ -1,0 +1,63 @@
+---
+- name: Debug
+  ansible.builtin.debug:
+    msg: "START network.vpn validate role integration tests on connection={{ ansible_connection }}"
+
+- name: Cleanup, Create Config, and Validate
+  block:
+    - name: Reset configuration before test
+      ansible.builtin.include_tasks: _cleanup.yaml
+
+    - name: Define test configuration content
+      ansible.builtin.set_fact:
+        test_vpn_config: |
+          provider: azure
+          tunnels:
+            - name: tunnel1
+              remote_ip: "198.51.100.1"
+              preshared_key: "test-key-789"
+            - name: tunnel2
+              remote_ip: "198.51.100.2"
+              preshared_key: "test-key-012"
+
+    - name: Write test VPN configuration file
+      ansible.builtin.copy:
+        dest: "~/azure.yaml"
+        content: "{{ test_vpn_config }}"
+        mode: "0644"
+
+    - name: Set test data store
+      ansible.builtin.set_fact:
+        test_data_store:
+          local: "~/test_backup"
+
+    - name: Ensure configuration file exists
+      ansible.builtin.stat:
+        path: "~/azure.yaml"
+      register: config_file
+
+    - name: Assert configuration file exists
+      ansible.builtin.assert:
+        that:
+          - config_file.stat.exists
+
+    - name: Run network.vpn.validate role
+      ansible.builtin.include_role:
+        name: network.vpn.validate
+      vars:
+        data_store: "{{ test_data_store }}"
+        configuration_file: "~/azure.yaml"
+      register: validate_result
+
+    - name: Assert validation runs without changes
+      ansible.builtin.assert:
+        that:
+          - validate_result.changed == false
+
+  always:
+    - name: Reset configuration after test
+      ansible.builtin.include_tasks: _cleanup.yaml
+
+- name: Debug
+  ansible.builtin.debug:
+    msg: "END network.vpn validate role integration tests on connection={{ ansible_connection }}"

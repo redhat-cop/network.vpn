@@ -23,14 +23,14 @@
 - name: "Validate configuration data against defined schema for provider - {{ provider }}"
   ansible.utils.validate:
     data: "{{ configuration }}"
-    criteria: "{{ lookup('file', 'files/schemas/providers/{{ provider }}/{{ operation }}.json') | from_json }}"
+    criteria: "{{ lookup('file', 'files/schemas/providers/{{ provider }}.json') | from_json }}"
     engine: ansible.utils.jsonschema
   vars:
     ansible_jsonschema_draft: draft7
   register: result
 
 - name: "Start operation for {{ provider }}"
-  ansible.builtin.include_tasks: "providers/{{ provider }}/{{ operation }}.yaml"
+  ansible.builtin.include_tasks: "providers/{{ provider }}.yaml"
 
 - name: Debug execution data
   ansible.builtin.debug:

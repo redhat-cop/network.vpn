@@ -1,0 +1,7 @@
+---
+- name: "Start network.vpn.deploy"
+  ansible.builtin.debug:
+    msg: "Starting ansible.vpn.deploy"
+  vars:
+    provider: "aws"
+    configuration_file: "aws.yaml"

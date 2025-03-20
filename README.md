@@ -3,12 +3,23 @@
 [![CI](https://github.com/redhat-cop/network.vpn/actions/workflows/tests.yml/badge.svg?branch=main&event=schedule)](https://github.com/redhat-cop/network.vpn/actions/workflows/tests.yml)
 [![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/7639/badge)](https://bestpractices.coreinfrastructure.org/projects/7639)
 
-This repository contains the `network.vpn` Ansible Collection.
+## About
+The Ansible Network VPN Validated Content provides essential roles to build, maintain and validate VPN tunnels across cloud providers and network appliances.
 
-## Description
+This collection includes the following roles:
+- **`deploy`**: Ensure consistent configuration deployment across network devices.
+- **`validate`**: Verifies the correctness and status of deployed VPN configurations.
 
-An Ansible Collection to build, maintain and validate VPN tunnels across cloud providers and network appliances.
-See `Supported Providers` section for more details.
+## Included content
+
+Click on the name of a role to view its documentation:
+
+<!--start collection content-->
+### Roles
+Name | Description
+--- | ---
+[network.vpn.deploy](roles/deploy/README.md) | Deploy consistent network configurations.
+[network.vpm.validate](roles/validate/README.md) | Validate the deployed VPN configurations.
 
 ## Tested with Ansible
 
@@ -35,10 +46,9 @@ With this configured, simply run the following commands:
 ```bash
 ansible-galaxy collection install network.vpn
 ```
+## Usecases
 
-## Using this collection
-
-### Example 1
+### Example 1: Deploy and validate AWS and Azure tunnels
 
 ```yaml
 ---
@@ -46,36 +56,39 @@ ansible-galaxy collection install network.vpn
   hosts: localhost
   gather_facts: true
   tasks:
-    - name: "Run network.vpn collection with specified operations"
+    - name: "Deploy aws"
       ansible.builtin.include_role:
-        name: network.vpn.run
+        name: network.vpn.deploy
       vars:
-        operations:
-          - name: deploy
-            vars:
-              provider: aws
-              configuration_file: aws.yaml
+        provider: aws
+        configuration_file: aws.yaml
 
-          - name: deploy
-            vars:
-              provider: azure
-              configuration_file: azure.yaml
+    - name: "Deploy azure"
+      ansible.builtin.include_role:
+        name: network.vpn.deploy
+      vars:
+        provider: azure
+        configuration_file: azure.yaml
 
-          - name: validate
-            vars:
-              provider: aws
-              tunnel: 1
-              session_status: UP
+    - name: "Validate aws tunnel"
+      ansible.builtin.include_role:
+        name: network.vpn.validate
+      vars:
+        provider: aws
+        tunnel: 1
+        session_status: UP
 
-          - name: validate
-            vars:
-              provider: azure
-              resource_group: VPN-RG
-              vpn_connection_name: Azure-to-AWS
-              session_status: Connected
+    - name: "Validate azure tunnel"
+      ansible.builtin.include_role:
+        name: network.vpn.validate
+      vars:
+        provider: azure
+        resource_group: VPN-RG
+        vpn_connection_name: Azure-to-AWS
+        session_status: Connected
 ```
 
-### Example 2
+### Example 2: Deploy and validate CSR tunnels
 
 ```yaml
 ---
@@ -83,34 +96,20 @@ ansible-galaxy collection install network.vpn
   hosts: csr_gateways
   gather_facts: true
   tasks:
-    - name: "Run network.vpn collection with specified operations"
+    - name: "Invoke deploy role"
       ansible.builtin.include_role:
-        name: network.vpn.run
+        name: network.vpn.deploy
       vars:
         provider: csr
-        operations:
-          - name: deploy
-            vars:
-              configuration_file: "{{ inventory_hostname }}.yaml"
+        configuration_file: "{{ inventory_hostname }}.yaml"
 
-          - name: validate
-            vars:
-              tunnel: Tunnel0
-              session_status: Connected
+    - name: "Invoke validate role"
+      ansible.builtin.include_role:
+        name: network.vpn.validate
+      vars:
+        tunnel: Tunnel0
+        session_status: Connected
 ```
-
-## Supported providers
-
-| **Provider** | **Operations** | **Operation Options**                                                                             |
-| ------------ | -------------- | ------------------------------------------------------------------------------------------------- |
-| aws          | deploy         | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/aws/deploy.yaml)     |
-|              | validate       | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/aws/validate.yaml)   |
-|              |                |
-| azure        | deploy         | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/azure/deploy.yaml)   |
-|              | validate       | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/azure/validate.yaml) |
-|              |                |
-| csr          | deploy         | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/csr/deploy.yaml)     |
-|              | validate       | [Options](https://github.com/redhat-cop/network.vpn/blob/main/docs/providers/csr/validate.yaml)   |
 
 ## Requirements
 
@@ -120,8 +119,21 @@ The following collections should be installed:
 - cisco.ios
 - community.aws
 
-### Code of Conduct
+## Contributing
 
+We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against this repository.
+
+Don't know how to start? Refer to the [Ansible community guide](https://docs.ansible.com/ansible/devel/community/index.html)!
+
+Want to submit code changes? Take a look at the [Quick-start development guide](https://docs.ansible.com/ansible/devel/community/create_pr_quick_start.html).
+
+We also use the following guidelines:
+
+* [Collection review checklist](https://docs.ansible.com/ansible/devel/community/collection_contributors/collection_reviewing.html)
+* [Ansible development guide](https://docs.ansible.com/ansible/devel/dev_guide/index.html)
+* [Ansible collection development guide](https://docs.ansible.com/ansible/devel/dev_guide/developing_collections.html#contributing-to-collections)
+
+### Code of Conduct
 This collection follows the Ansible project's
 [Code of Conduct](https://docs.ansible.com/ansible/devel/community/code_of_conduct.html).
 Please read and familiarize yourself with this document.
@@ -130,8 +142,18 @@ Please read and familiarize yourself with this document.
 
 Release notes are available [here](https://github.com/redhat-cop/network.vpn/blob/main/CHANGELOG.rst).
 
+## Related information
+
+- [Developing network resource modules](https://github.com/ansible-network/networking-docs/blob/main/rm_dev_guide.md)
+- [Ansible Networking docs](https://github.com/ansible-network/networking-docs)
+- [Ansible Collection Overview](https://github.com/ansible-collections/overview)
+- [Ansible Roles overview](https://docs.ansible.com/ansible/2.9/user_guide/playbooks_reuse_roles.html)
+- [Ansible User guide](https://docs.ansible.com/ansible/latest/user_guide/index.html)
+- [Ansible Developer guide](https://docs.ansible.com/ansible/latest/dev_guide/index.html)
+- [Ansible Community Code of Conduct](https://docs.ansible.com/ansible/latest/community/code_of_conduct.html)
+
 ## Licensing
 
 GNU General Public License v3.0 or later.
 
-See [COPYING](https://www.gnu.org/licenses/gpl-3.0.txt) to see the full text.
+See [LICENSE](https://www.gnu.org/licenses/gpl-3.0.txt) to see the full text.
