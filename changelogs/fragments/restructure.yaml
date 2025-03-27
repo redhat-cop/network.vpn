@@ -1,8 +1,0 @@
----
-major_changes:
-  - Restructured the network.vpn collection by converting supported operations into separate roles
-  - Converted operations like `deploy` and `validate` into individual roles for better modularity and clarity.
-  - Each role (`deploy`, `validate`) now has its own README.md and integration tests.
-  - Added integration tests to align with the new role-based structure.
-  - Improved documentation and usage examples for each role to reflect the restructuring.
-  - Updated the `network.vpn` collection documentation to reflect the new role-based structure.

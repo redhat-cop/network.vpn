@@ -4,6 +4,19 @@ Network VPN Collection Release Notes
 
 .. contents:: Topics
 
+v5.0.0
+======
+
+Major Changes
+-------------
+
+- Added integration tests to align with the new role-based structure.
+- Converted operations like `deploy` and `validate` into individual roles for better modularity and clarity.
+- Each role (`deploy`, `validate`) now has its own README.md and integration tests.
+- Improved documentation and usage examples for each role to reflect the restructuring.
+- Restructured the network.vpn collection by converting supported operations into separate roles
+- Updated the `network.vpn` collection documentation to reflect the new role-based structure.
+
 v4.0.0
 ======
 
