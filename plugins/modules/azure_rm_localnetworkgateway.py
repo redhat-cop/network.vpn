@@ -1,9 +1,16 @@
 #!/usr/bin/python
-# GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+# GNU General Public License v3.0+
+# (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
+
+try:
+    from azure.core.exceptions import ResourceNotFoundError
+except ImportError:
+    # This is handled in azure_rm_common
+    pass
 
 
 DOCUMENTATION = """
@@ -15,7 +22,9 @@ author:
   - Nilashish Chakraborty (@NilashishC)
 options:
   resource_group:
-    description: Name of a resource group where local network gateway exists or will be created.
+    description: >
+      Name of a resource group where local network gateway exists
+      or will be created.
     type: str
     required: true
   name:
@@ -23,12 +32,15 @@ options:
     type: str
     required: true
   state:
-    description: State of the Local Network Gateway. Use C(present) to create or update local network gateway and C(absent) to delete it.
+    description: >
+      State of the Local Network Gateway. Use C(present) to create or update
+      local network gateway and C(absent) to delete it.
     type: str
     default: present
     choices: ["absent", "present"]
   location:
-    description: Valid Azure location. Defaults to location of the resource group.
+    description: >
+      Valid Azure location. Defaults to location of the resource group.
     type: str
   local_network_address_space:
     description: Local network site address space.
@@ -45,11 +57,104 @@ options:
         description: The BGP speaker's ASN.
         type: str
       bgp_peering_address:
-        description: The BGP peering address and BGP identifier of this BGP speaker.
+        description: >
+          The BGP peering address and BGP identifier of this BGP speaker.
         type: str
       peer_weight:
-        description: The weight added to routes learned from this BGP speaker.
+        description: >
+          The weight added to routes learned from this BGP speaker.
         type: int
+  tags:
+    description: >
+      Dictionary of string:string pairs to assign as metadata to the object.
+    type: dict
+  ad_user:
+    description: >
+      Active Directory username. Use when authenticating with an Active
+      Directory user rather than service principal.
+    type: str
+  adfs_authority_url:
+    description: >
+      Azure AD authority url. Use when authenticating with
+      Username/password, and has your own ADFS authority.
+    type: str
+  api_profile:
+    description: >
+      Selects an API profile to use when communicating with Azure services.
+      Default value of C(latest) is appropriate for public clouds; future
+      values will allow use with Azure Stack.
+    type: str
+    default: latest
+  append_tags:
+    description: >
+      Use to control if tags field is canonical or just appends to existing
+      tags.
+    type: bool
+    default: true
+  auth_source:
+    description: >
+      Controls the source of the credentials to use for authentication.
+    type: str
+    choices: ['auto', 'cli', 'env', 'credential_file', 'msi']
+    default: auto
+  cert_validation_mode:
+    description: >
+      Controls the certificate validation behavior for Azure endpoints.
+    type: str
+    choices: ['validate', 'ignore']
+  client_id:
+    description: >
+      Azure client ID. Use when authenticating with a Service Principal.
+    type: str
+  cloud_environment:
+    description: >
+      For cloud environments other than the US public cloud, the environment
+      name (as defined by Azure Python SDK).
+    type: str
+    default: AzureCloud
+  disable_instance_discovery:
+    description: >
+      Determines whether or not instance discovery is performed when
+      attempting to authenticate. Setting this to true will completely
+      disable both instance discovery and authority validation. This
+      functionality is intended for use in scenarios where the metadata
+      endpoint cannot be reached.
+    type: bool
+    default: false
+  log_mode:
+    description: Parent argument.
+    type: str
+  log_path:
+    description: Parent argument.
+    type: str
+  password:
+    description: >
+      Active Directory user password. Use when authenticating with an Active
+      Directory user rather than service principal.
+    type: str
+  profile:
+    description: Security profile found in ~/.azure/credentials file.
+    type: str
+  secret:
+    description: >
+      Azure client secret. Use when authenticating with a Service Principal.
+    type: str
+  subscription_id:
+    description: Your Azure subscription Id.
+    type: str
+  tenant:
+    description: >
+      Azure tenant ID. Use when authenticating with a Service Principal.
+    type: str
+  thumbprint:
+    description: >
+      The thumbprint of the private key specified in I(x509_certificate_path).
+    type: str
+  x509_certificate_path:
+    description: >
+      Path to the X509 certificate used to create the service principal
+      in PEM format.
+    type: path
 """
 
 EXAMPLES = """
@@ -69,14 +174,11 @@ id:
         - Local Network Gateway resource ID.
     returned: always
     type: str
-    sample: "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myRG/providers/Microsoft.Network/LocalNetworkGateways/myLocalNWGateway"
+    sample: >
+      /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myRG/
+      providers/Microsoft.Network/LocalNetworkGateways/myLocalNWGateway
 """
-try:
-    from azure.core.exceptions import ResourceNotFoundError
-except ImportError:
-    # This is handled in azure_rm_common
-    pass
-from ansible_collections.azure.azcollection.plugins.module_utils.azure_rm_common import (
+from ansible_collections.azure.azcollection.plugins.module_utils.azure_rm_common import (  # noqa: E501
     AzureRMModuleBase,
 )
 
@@ -97,7 +199,9 @@ def lngw_to_dict(lngw):
         fqdn=lngw.fqdn,
         tags=lngw.tags,
         provisioning_state=lngw.provisioning_state,
-        local_network_address_space=lngw.local_network_address_space.address_prefixes,
+        local_network_address_space=(
+            lngw.local_network_address_space.address_prefixes
+        ),
         gateway_ip_address=lngw.gateway_ip_address,
     )
     return results
@@ -108,7 +212,9 @@ class AzureRMLocalNetworkGateway(AzureRMModuleBase):
         self.module_arg_spec = dict(
             resource_group=dict(type="str", required=True),
             name=dict(type="str", required=True),
-            state=dict(type="str", default="present", choices=["present", "absent"]),
+            state=dict(
+                type="str", default="present", choices=["present", "absent"]
+            ),
             location=dict(type="str"),
             local_network_address_space=dict(type="list", elements="str"),
             gateway_ip_address=dict(type="str"),
@@ -154,15 +260,15 @@ class AzureRMLocalNetworkGateway(AzureRMModuleBase):
             )
             if self.state == "absent":
                 self.log(
-                    "CHANGED: Local Network Gateway exists but requested state is 'absent'"
+                    "CHANGED: Local Network Gateway exists but requested "
+                    "state is 'absent'"
                 )
                 changed = True
         except ResourceNotFoundError:
             if self.state == "present":
                 self.log(
-                    "CHANGED: Local Network Gateway {0} does not exist but requested state is 'present'".format(
-                        self.name
-                    )
+                    "CHANGED: Local Network Gateway {0} does not exist "
+                    "but requested state is 'present'".format(self.name)
                 )
                 changed = True
 
@@ -172,14 +278,19 @@ class AzureRMLocalNetworkGateway(AzureRMModuleBase):
                 update_tags, results["tags"] = self.update_tags(results["tags"])
                 if update_tags:
                     changed = True
-                if self.bgp_settings and self.bgp_settings != results["bgp_settings"]:
+                if (
+                    self.bgp_settings
+                    and self.bgp_settings != results["bgp_settings"]
+                ):
                     changed = True
                 if (
                     self.local_network_address_space
                     != results["local_network_address_space"]
                 ):
                     changed = True
-                if self.gateway_ip_address != results["gateway_ip_address"]:
+                if (
+                    self.gateway_ip_address != results["gateway_ip_address"]
+                ):
                     changed = True
 
         self.results["changed"] = changed
@@ -196,7 +307,9 @@ class AzureRMLocalNetworkGateway(AzureRMModuleBase):
                 lngw_bgp = (
                     self.network_models.BgpSettings(
                         asn=self.bgp_settings["asn"],
-                        bgp_peering_address=self.bgp_settings["bgp_peering_address"],
+                        bgp_peering_address=(
+                            self.bgp_settings["bgp_peering_address"]
+                        ),
                         peer_weight=self.bgp_settings["peer_weight"],
                     )
                     if self.bgp_settings is not None
@@ -222,22 +335,23 @@ class AzureRMLocalNetworkGateway(AzureRMModuleBase):
 
     def create_or_update_lngw(self, lngw):
         try:
-            poller = self.network_client.local_network_gateways.begin_create_or_update(
-                self.resource_group, self.name, lngw
+            poller = (
+                self.network_client.local_network_gateways
+                .begin_create_or_update(self.resource_group, self.name, lngw)
             )
             new_lngw = self.get_poller_result(poller)
             return lngw_to_dict(new_lngw)
         except Exception as exc:
             self.fail(
-                "Error creating or updating local network gateway {0} - {1}".format(
-                    self.name, str(exc)
-                )
+                "Error creating or updating local network gateway "
+                "{0} - {1}".format(self.name, str(exc))
             )
 
     def delete_lngw(self):
         try:
-            poller = self.network_client.local_network_gateways.begin_delete(
-                self.resource_group, self.name
+            poller = (
+                self.network_client.local_network_gateways
+                .begin_delete(self.resource_group, self.name)
             )
             self.get_poller_result(poller)
         except Exception as exc:

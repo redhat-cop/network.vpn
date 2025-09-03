@@ -1,9 +1,20 @@
 #!/usr/bin/python
-# GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+# GNU General Public License v3.0+
+# (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
+
+try:
+    from azure.core.exceptions import ResourceNotFoundError
+except Exception:
+    # This is handled in azure_rm_common
+    pass
+
+from ansible_collections.azure.azcollection.plugins.module_utils.azure_rm_common import (  # noqa: E501
+    AzureRMModuleBase,
+)
 
 
 DOCUMENTATION = """
@@ -18,12 +29,96 @@ options:
     description: Only show results for a virtual network gateway connection.
     type: str
   resource_group:
-    description: Limit results by resource group. Required when filtering by name.
+    description: >
+      Limit results by resource group. Required when filtering by name.
     type: str
   tags:
-    description: Limit results by providing a list of tags. Format tags as 'key' or 'key:value'.
+    description: >
+      Limit results by providing a list of tags. Format tags as 'key'
+      or 'key:value'.
     type: list
     elements: str
+  ad_user:
+    description: >
+      Active Directory username. Use when authenticating with an Active
+      Directory user rather than service principal.
+    type: str
+  adfs_authority_url:
+    description: >
+      Azure AD authority url. Use when authenticating with
+      Username/password, and has your own ADFS authority.
+    type: str
+  api_profile:
+    description: >
+      Selects an API profile to use when communicating with Azure services.
+      Default value of C(latest) is appropriate for public clouds; future
+      values will allow use with Azure Stack.
+    type: str
+    default: latest
+  auth_source:
+    description: >
+      Controls the source of the credentials to use for authentication.
+    type: str
+    choices: ['auto', 'cli', 'env', 'credential_file', 'msi']
+    default: auto
+  cert_validation_mode:
+    description: >
+      Controls the certificate validation behavior for Azure endpoints.
+    type: str
+    choices: ['validate', 'ignore']
+  client_id:
+    description: >
+      Azure client ID. Use when authenticating with a Service Principal.
+    type: str
+  cloud_environment:
+    description: >
+      For cloud environments other than the US public cloud, the environment
+      name (as defined by Azure Python SDK).
+    type: str
+    default: AzureCloud
+  disable_instance_discovery:
+    description: >
+      Determines whether or not instance discovery is performed when
+      attempting to authenticate. Setting this to true will completely
+      disable both instance discovery and authority validation. This
+      functionality is intended for use in scenarios where the metadata
+      endpoint cannot be reached.
+    type: bool
+    default: false
+  log_mode:
+    description: Parent argument.
+    type: str
+  log_path:
+    description: Parent argument.
+    type: str
+  password:
+    description: >
+      Active Directory user password. Use when authenticating with an Active
+      Directory user rather than service principal.
+    type: str
+  profile:
+    description: Security profile found in ~/.azure/credentials file.
+    type: str
+  secret:
+    description: >
+      Azure client secret. Use when authenticating with a Service Principal.
+    type: str
+  subscription_id:
+    description: Your Azure subscription Id.
+    type: str
+  tenant:
+    description: >
+      Azure tenant ID. Use when authenticating with a Service Principal.
+    type: str
+  thumbprint:
+    description: >
+      The thumbprint of the private key specified in I(x509_certificate_path).
+    type: str
+  x509_certificate_path:
+    description: >
+      Path to the X509 certificate used to create the service principal
+      in PEM format.
+    type: path
 """
 
 EXAMPLES = """
@@ -59,7 +154,8 @@ RETURN = """
         description: The authorization key.
         type: str
       connection_mode:
-        description: The connection mode for the virtual network gateway connection.
+        description: >
+          The connection mode for the virtual network gateway connection.
         type: str
       connection_type:
         description: The gateway connection type.
@@ -74,7 +170,8 @@ RETURN = """
           - Returned when name of the connection is specified.
         type: str
       dpd_timeout_seconds:
-        description: The dead peer detection timeout of this connection in seconds.
+        description: >
+          The dead peer detection timeout of this connection in seconds.
         type: int
       enable_bgp:
         description: EnableBgp flag.
@@ -86,10 +183,12 @@ RETURN = """
         description: The name of the local network gateway resource.
         type: str
       location:
-        description: Valid Azure location. Defaults to location of the resource group.
+        description: >
+          Valid Azure location. Defaults to location of the resource group.
         type: str
       provisioning_state:
-        description: The provisioning state for the virtual network gateway resource.
+        description: >
+          The provisioning state for the virtual network gateway resource.
         type: str
       routing_weight:
         description: The routing weight.
@@ -101,7 +200,8 @@ RETURN = """
         description: Tags assigned to the resource. Dictionary of pairs.
         type: dict
       traffic_selector_policies:
-        description: The Traffic Selector Policies to be considered by this connection.
+        description: >
+          The Traffic Selector Policies to be considered by this connection.
         type: list
       use_local_azure_ip_address:
         description: Use private local Azure IP for the connection.
@@ -116,15 +216,6 @@ RETURN = """
         description: The virtual network gateway resource.
         type: dict
 """
-try:
-    from azure.core.exceptions import ResourceNotFoundError
-except Exception:
-    # This is handled in azure_rm_common
-    pass
-
-from ansible_collections.azure.azcollection.plugins.module_utils.azure_rm_common import (
-    AzureRMModuleBase,
-)
 
 
 class AzureRMVirtualNetworkGatewayConnectionInfo(AzureRMModuleBase):
@@ -157,7 +248,9 @@ class AzureRMVirtualNetworkGatewayConnectionInfo(AzureRMModuleBase):
         elif self.resource_group is not None:
             results = self.list_resource_group()
 
-        self.results["virtualnetworkgatewayconnections"] = self.curated(results)
+        self.results["virtualnetworkgatewayconnections"] = self.curated(
+            results
+        )
 
         return self.results
 
@@ -167,8 +260,9 @@ class AzureRMVirtualNetworkGatewayConnectionInfo(AzureRMModuleBase):
         results = []
 
         try:
-            item = self.network_client.virtual_network_gateway_connections.get(
-                self.resource_group, self.name
+            item = (
+                self.network_client.virtual_network_gateway_connections
+                .get(self.resource_group, self.name)
             )
         except ResourceNotFoundError:
             pass
@@ -180,8 +274,9 @@ class AzureRMVirtualNetworkGatewayConnectionInfo(AzureRMModuleBase):
     def list_resource_group(self):
         self.log("List items for resource group")
         try:
-            response = self.network_client.virtual_network_gateway_connections.list(
-                self.resource_group
+            response = (
+                self.network_client.virtual_network_gateway_connections
+                .list(self.resource_group)
             )
         except ResourceNotFoundError as exc:
             self.fail(
@@ -220,8 +315,12 @@ class AzureRMVirtualNetworkGatewayConnectionInfo(AzureRMModuleBase):
             tags=vngwconn.tags,
             traffic_selector_policies=vngwconn.traffic_selector_policies,
             use_local_azure_ip_address=vngwconn.use_local_azure_ip_address,
-            use_policy_based_traffic_selectors=vngwconn.use_policy_based_traffic_selectors,
-            virtual_network_gateway1=dict(id=vngwconn.virtual_network_gateway1.id),
+            use_policy_based_traffic_selectors=(
+                vngwconn.use_policy_based_traffic_selectors
+            ),
+            virtual_network_gateway1=dict(
+                id=vngwconn.virtual_network_gateway1.id
+            ),
         )
         if vngwconn.connection_status:
             result["connection_status"] = vngwconn.connection_status
