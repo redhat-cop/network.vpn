@@ -1,7 +1,7 @@
 # Start configure_vpn for provider aws
 ---
 - name: "Create Virtual Gateway if specified"
-  community.aws.ec2_vpc_vgw:
+  amazon.aws.ec2_vpc_vgw:
     region: "{{ configuration.region }}"
     vpc_id: "{{ configuration.vpc_id }}"
     name: "{{ configuration.virtual_gateway.name }}"
@@ -10,7 +10,7 @@
   when: configuration.virtual_gateway is defined
 
 - name: "Create Customer Gateway - {{ configuration.customer_gateway.name }}"
-  community.aws.ec2_customer_gateway:
+  amazon.aws.ec2_customer_gateway:
     region: "{{ configuration.region }}"
     name: "{{ configuration.customer_gateway.name }}"
     ip_address: "{{ configuration.customer_gateway.ip_address }}"
@@ -28,7 +28,7 @@
   when: configuration.customer_gateway is defined
 
 - name: "Create VPN Connection"
-  community.aws.ec2_vpc_vpn:
+  amazon.aws.ec2_vpc_vpn:
     region: "{{ configuration.region }}"
     customer_gateway_id: "{{ configuration.vpn_connection.customer_gateway_id | d(customer_gateway_id) }}"
     vpn_gateway_id: "{{ configuration.vpn_connection.vpn_gateway_id | d(vpn_gateway_id) }}"

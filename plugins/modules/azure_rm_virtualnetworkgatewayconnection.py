@@ -1,5 +1,6 @@
 #!/usr/bin/python
-# GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+# GNU General Public License v3.0+
+# (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
 
@@ -16,7 +17,9 @@ author:
   - Nilashish Chakraborty (@NilashishC)
 options:
   resource_group:
-    description: Name of a resource group where the virtual network gateway connection exists or will be created.
+    description: >
+      Name of a resource group where the virtual network gateway connection
+      exists or will be created.
     type: str
     required: true
   name:
@@ -24,12 +27,15 @@ options:
     type: str
     required: true
   state:
-    description: State of the virtual network gateway connection. Use C(present) to create or update and C(absent) to delete it.
+    description: >
+      State of the virtual network gateway connection. Use C(present) to create
+      or update and C(absent) to delete it.
     type: str
     default: present
     choices: ["absent", "present"]
   location:
-    description: Valid Azure location. Defaults to location of the resource group.
+    description: >
+      Valid Azure location. Defaults to location of the resource group.
     type: str
   virtual_network_gateway1:
     description: The name of the virtual network gateway resource.
@@ -72,6 +78,82 @@ options:
   express_route_gateway_bypass:
     description: Bypass ExpressRoute Gateway for data forwarding.
     type: bool
+  tags:
+    description: Dictionary of string:string pairs to assign as metadata to the object.
+    type: dict
+  ad_user:
+    description: Active Directory username. Use when authenticating with an Active Directory user rather than service principal.
+    type: str
+  adfs_authority_url:
+    description: >
+      Azure AD authority url. Use when authenticating with
+      Username/password, and has your own ADFS authority.
+    type: str
+  api_profile:
+    description: >
+      Selects an API profile to use when communicating with Azure services.
+      Default value of C(latest) is appropriate for public clouds; future
+      values will allow use with Azure Stack.
+    type: str
+    default: latest
+  append_tags:
+    description: Use to control if tags field is canonical or just appends to existing tags.
+    type: bool
+    default: true
+  auth_source:
+    description: Controls the source of the credentials to use for authentication.
+    type: str
+    choices: ['auto', 'cli', 'env', 'credential_file', 'msi']
+    default: auto
+  cert_validation_mode:
+    description: Controls the certificate validation behavior for Azure endpoints.
+    type: str
+    choices: ['validate', 'ignore']
+  client_id:
+    description: Azure client ID. Use when authenticating with a Service Principal.
+    type: str
+  cloud_environment:
+    description: >
+      For cloud environments other than the US public cloud, the environment
+      name (as defined by Azure Python SDK).
+    type: str
+    default: AzureCloud
+  disable_instance_discovery:
+    description: >
+      Determines whether or not instance discovery is performed when
+      attempting to authenticate. Setting this to true will completely
+      disable both instance discovery and authority validation. This
+      functionality is intended for use in scenarios where the metadata
+      endpoint cannot be reached.
+    type: bool
+    default: false
+  log_mode:
+    description: Parent argument.
+    type: str
+  log_path:
+    description: Parent argument.
+    type: str
+  password:
+    description: Active Directory user password. Use when authenticating with an Active Directory user rather than service principal.
+    type: str
+  profile:
+    description: Security profile found in ~/.azure/credentials file.
+    type: str
+  secret:
+    description: Azure client secret. Use when authenticating with a Service Principal.
+    type: str
+  subscription_id:
+    description: Your Azure subscription Id.
+    type: str
+  tenant:
+    description: Azure tenant ID. Use when authenticating with a Service Principal.
+    type: str
+  thumbprint:
+    description: The thumbprint of the private key specified in I(x509_certificate_path).
+    type: str
+  x509_certificate_path:
+    description: Path to the X509 certificate used to create the service principal in PEM format.
+    type: path
 '''
 
 EXAMPLES = '''
@@ -101,14 +183,18 @@ id:
         - Virual Network Gateway connection resource ID.
     returned: always
     type: str
-    sample: "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.Network/connections/MyVNGWConnection"
+    sample: >
+      /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/
+      myResourceGroup/providers/Microsoft.Network/connections/MyVNGWConnection
 '''
 try:
     from azure.core.exceptions import ResourceNotFoundError
 except ImportError:
     # This is handled in azure_rm_common
     pass
-from ansible_collections.azure.azcollection.plugins.module_utils.azure_rm_common import AzureRMModuleBase
+from ansible_collections.azure.azcollection.plugins.module_utils.azure_rm_common import (  # noqa: E501
+    AzureRMModuleBase,
+)
 
 
 def vngwconn_to_dict(vngwconn):
