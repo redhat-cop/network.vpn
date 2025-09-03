@@ -85,10 +85,15 @@ options:
     description: Active Directory username. Use when authenticating with an Active Directory user rather than service principal.
     type: str
   adfs_authority_url:
-    description: Azure AD authority url. Use when authenticating with Username/password, and has your own ADFS authority.
+    description: >
+      Azure AD authority url. Use when authenticating with
+      Username/password, and has your own ADFS authority.
     type: str
   api_profile:
-    description: Selects an API profile to use when communicating with Azure services. Default value of C(latest) is appropriate for public clouds; future values will allow use with Azure Stack.
+    description: >
+      Selects an API profile to use when communicating with Azure services.
+      Default value of C(latest) is appropriate for public clouds; future
+      values will allow use with Azure Stack.
     type: str
     default: latest
   append_tags:
@@ -108,11 +113,18 @@ options:
     description: Azure client ID. Use when authenticating with a Service Principal.
     type: str
   cloud_environment:
-    description: For cloud environments other than the US public cloud, the environment name (as defined by Azure Python SDK).
+    description: >
+      For cloud environments other than the US public cloud, the environment
+      name (as defined by Azure Python SDK).
     type: str
     default: AzureCloud
   disable_instance_discovery:
-    description: Determines whether or not instance discovery is performed when attempting to authenticate. Setting this to true will completely disable both instance discovery and authority validation. This functionality is intended for use in scenarios where the metadata endpoint cannot be reached.
+    description: >
+      Determines whether or not instance discovery is performed when
+      attempting to authenticate. Setting this to true will completely
+      disable both instance discovery and authority validation. This
+      functionality is intended for use in scenarios where the metadata
+      endpoint cannot be reached.
     type: bool
     default: false
   log_mode:
