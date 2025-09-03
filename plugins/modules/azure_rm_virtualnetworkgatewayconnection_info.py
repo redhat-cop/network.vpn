@@ -6,16 +6,6 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-try:
-    from azure.core.exceptions import ResourceNotFoundError
-except Exception:
-    # This is handled in azure_rm_common
-    pass
-
-from ansible_collections.azure.azcollection.plugins.module_utils.azure_rm_common import (  # noqa: E501
-    AzureRMModuleBase,
-)
-
 
 DOCUMENTATION = """
 module: azure_rm_virtualnetworkgatewayconnection_info
@@ -216,6 +206,16 @@ RETURN = """
         description: The virtual network gateway resource.
         type: dict
 """
+
+try:
+    from azure.core.exceptions import ResourceNotFoundError
+except Exception:
+    # This is handled in azure_rm_common
+    pass
+
+from ansible_collections.azure.azcollection.plugins.module_utils.azure_rm_common import (  # noqa: E501
+    AzureRMModuleBase,
+)
 
 
 class AzureRMVirtualNetworkGatewayConnectionInfo(AzureRMModuleBase):

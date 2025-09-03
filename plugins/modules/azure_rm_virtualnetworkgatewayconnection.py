@@ -6,12 +6,6 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-try:
-    from azure.core.exceptions import ResourceNotFoundError
-except ImportError:
-    # This is handled in azure_rm_common
-    pass
-
 
 DOCUMENTATION = '''
 ---
@@ -181,6 +175,11 @@ id:
       /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/
       myResourceGroup/providers/Microsoft.Network/connections/MyVNGWConnection
 '''
+try:
+    from azure.core.exceptions import ResourceNotFoundError
+except ImportError:
+    # This is handled in azure_rm_common
+    pass
 from ansible_collections.azure.azcollection.plugins.module_utils.azure_rm_common import (  # noqa: E501
     AzureRMModuleBase,
 )
